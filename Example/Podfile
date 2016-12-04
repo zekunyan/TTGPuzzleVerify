@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'TTGPuzzleVerify_Example' do
+  pod 'TTGPuzzleVerify', :path => '../'
+
+  target 'TTGPuzzleVerify_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

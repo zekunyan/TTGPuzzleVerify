@@ -1,42 +1,21 @@
-#
-# Be sure to run `pod lib lint TTGPuzzleVerify.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
   s.name             = 'TTGPuzzleVerify'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of TTGPuzzleVerify.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.version          = '1.0.0'
+  s.summary          = 'By completing image puzzle game, TTGPuzzleVerify is a more user-friendly verification tool on iOS, which is highly customizable and easy to use.'
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+                        By completing image puzzle game, TTGPuzzleVerify is a more user-friendly verification tool on iOS, which is highly customizable and easy to use. It supports square, circle, classic or custom puzzle shape. User can complete the verification by sliding horizontally, vertically or directly dragging the puzzle block.
+                        DESC
 
-  s.homepage         = 'https://github.com/<GITHUB_USERNAME>/TTGPuzzleVerify'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.homepage         = 'https://github.com/zekunyan/TTGPuzzleVerify'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'zekunyan' => 'zekunyan@163.com' }
-  s.source           = { :git => 'https://github.com/<GITHUB_USERNAME>/TTGPuzzleVerify.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => 'https://github.com/zekunyan/TTGPuzzleVerify.git', :tag => s.version.to_s }
+  s.social_media_url = 'http://tutuge.me'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '7.0'
+  s.requires_arc     = true
 
   s.source_files = 'TTGPuzzleVerify/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'TTGPuzzleVerify' => ['TTGPuzzleVerify/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.public_header_files = 'TTGPuzzleVerify/Classes/**/*.h'
 end

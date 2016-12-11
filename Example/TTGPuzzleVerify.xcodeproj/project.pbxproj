@@ -13,7 +13,6 @@
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* TTGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* TTGAppDelegate.m */; };
-		6003F5A7195388D20070C39A /* TTGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* TTGViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -23,6 +22,15 @@
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		887FA8D1606E74B2929856D5 /* Pods_TTGPuzzleVerify_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80EEB8433BC5152B6A9E3692 /* Pods_TTGPuzzleVerify_Tests.framework */; };
 		970A9B2A074460FA6070F62D /* Pods_TTGPuzzleVerify_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 004A7EC5982974B2CA547CFA /* Pods_TTGPuzzleVerify_Example.framework */; };
+		BFB7B31B1DF490930087C337 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFB7B31A1DF490930087C337 /* Launch Screen.storyboard */; };
+		BFEBA50F1DFDA03D008BBB7D /* TTGSlideHorizontallyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEBA50E1DFDA03D008BBB7D /* TTGSlideHorizontallyVC.m */; };
+		BFEBA5121DFDA133008BBB7D /* TTGSlideVerticalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEBA5111DFDA133008BBB7D /* TTGSlideVerticalVC.m */; };
+		BFEBA5151DFDA3DE008BBB7D /* TTGDragToVerifyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEBA5141DFDA3DE008BBB7D /* TTGDragToVerifyVC.m */; };
+		BFEBA5181DFDA4C4008BBB7D /* TTGSlideAndVerifyManuallyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEBA5171DFDA4C4008BBB7D /* TTGSlideAndVerifyManuallyVC.m */; };
+		BFEBA51B1DFDA86F008BBB7D /* TTGSquarePatternVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEBA51A1DFDA86F008BBB7D /* TTGSquarePatternVC.m */; };
+		BFEBA51E1DFDA87C008BBB7D /* TTGCirclePatternVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEBA51D1DFDA87C008BBB7D /* TTGCirclePatternVC.m */; };
+		BFEBA5211DFDA887008BBB7D /* TTGCustomPatternVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEBA5201DFDA887008BBB7D /* TTGCustomPatternVC.m */; };
+		BFEBA5241DFDA892008BBB7D /* TTGCustomShadowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEBA5231DFDA892008BBB7D /* TTGCustomShadowVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,9 +45,9 @@
 
 /* Begin PBXFileReference section */
 		004A7EC5982974B2CA547CFA /* Pods_TTGPuzzleVerify_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TTGPuzzleVerify_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		04AC49E61C9DB734067CA3D8 /* TTGPuzzleVerify.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = TTGPuzzleVerify.podspec; path = ../TTGPuzzleVerify.podspec; sourceTree = "<group>"; };
+		04AC49E61C9DB734067CA3D8 /* TTGPuzzleVerify.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = TTGPuzzleVerify.podspec; path = ../TTGPuzzleVerify.podspec; sourceTree = "<group>"; };
 		4421B8D17FD8CB9DDB0A4B10 /* Pods-TTGPuzzleVerify_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTGPuzzleVerify_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TTGPuzzleVerify_Tests/Pods-TTGPuzzleVerify_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		51E71897E0C9EEEEF92299AA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		51E71897E0C9EEEEF92299AA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		55B4877485FE4DF2FBD7B4F9 /* Pods-TTGPuzzleVerify_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTGPuzzleVerify_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTGPuzzleVerify_Tests/Pods-TTGPuzzleVerify_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* TTGPuzzleVerify_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TTGPuzzleVerify_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -51,8 +59,6 @@
 		6003F59B195388D20070C39A /* TTGPuzzleVerify-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TTGPuzzleVerify-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* TTGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTGAppDelegate.h; sourceTree = "<group>"; };
 		6003F59D195388D20070C39A /* TTGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTGAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A5195388D20070C39A /* TTGViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTGViewController.h; sourceTree = "<group>"; };
-		6003F5A6195388D20070C39A /* TTGViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTGViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6003F5AE195388D20070C39A /* TTGPuzzleVerify_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TTGPuzzleVerify_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -63,8 +69,25 @@
 		720F2DA642F551C634264584 /* Pods-TTGPuzzleVerify_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTGPuzzleVerify_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TTGPuzzleVerify_Example/Pods-TTGPuzzleVerify_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		80EEB8433BC5152B6A9E3692 /* Pods_TTGPuzzleVerify_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TTGPuzzleVerify_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		97EB71D1FAECE279C23BCF42 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		97EB71D1FAECE279C23BCF42 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B9856936AE09C30C22FD9E62 /* Pods-TTGPuzzleVerify_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTGPuzzleVerify_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTGPuzzleVerify_Example/Pods-TTGPuzzleVerify_Example.release.xcconfig"; sourceTree = "<group>"; };
+		BFB7B31A1DF490930087C337 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		BFEBA50D1DFDA03D008BBB7D /* TTGSlideHorizontallyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTGSlideHorizontallyVC.h; sourceTree = "<group>"; };
+		BFEBA50E1DFDA03D008BBB7D /* TTGSlideHorizontallyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTGSlideHorizontallyVC.m; sourceTree = "<group>"; };
+		BFEBA5101DFDA133008BBB7D /* TTGSlideVerticalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTGSlideVerticalVC.h; sourceTree = "<group>"; };
+		BFEBA5111DFDA133008BBB7D /* TTGSlideVerticalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTGSlideVerticalVC.m; sourceTree = "<group>"; };
+		BFEBA5131DFDA3DE008BBB7D /* TTGDragToVerifyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTGDragToVerifyVC.h; sourceTree = "<group>"; };
+		BFEBA5141DFDA3DE008BBB7D /* TTGDragToVerifyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTGDragToVerifyVC.m; sourceTree = "<group>"; };
+		BFEBA5161DFDA4C4008BBB7D /* TTGSlideAndVerifyManuallyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTGSlideAndVerifyManuallyVC.h; sourceTree = "<group>"; };
+		BFEBA5171DFDA4C4008BBB7D /* TTGSlideAndVerifyManuallyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTGSlideAndVerifyManuallyVC.m; sourceTree = "<group>"; };
+		BFEBA5191DFDA86F008BBB7D /* TTGSquarePatternVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTGSquarePatternVC.h; sourceTree = "<group>"; };
+		BFEBA51A1DFDA86F008BBB7D /* TTGSquarePatternVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTGSquarePatternVC.m; sourceTree = "<group>"; };
+		BFEBA51C1DFDA87C008BBB7D /* TTGCirclePatternVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTGCirclePatternVC.h; sourceTree = "<group>"; };
+		BFEBA51D1DFDA87C008BBB7D /* TTGCirclePatternVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTGCirclePatternVC.m; sourceTree = "<group>"; };
+		BFEBA51F1DFDA887008BBB7D /* TTGCustomPatternVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTGCustomPatternVC.h; sourceTree = "<group>"; };
+		BFEBA5201DFDA887008BBB7D /* TTGCustomPatternVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTGCustomPatternVC.m; sourceTree = "<group>"; };
+		BFEBA5221DFDA892008BBB7D /* TTGCustomShadowVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTGCustomShadowVC.h; sourceTree = "<group>"; };
+		BFEBA5231DFDA892008BBB7D /* TTGCustomShadowVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTGCustomShadowVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,13 +153,28 @@
 		6003F593195388D20070C39A /* Example for TTGPuzzleVerify */ = {
 			isa = PBXGroup;
 			children = (
+				6003F5A8195388D20070C39A /* Images.xcassets */,
+				BFB7B31A1DF490930087C337 /* Launch Screen.storyboard */,
+				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
+				6003F594195388D20070C39A /* Supporting Files */,
 				6003F59C195388D20070C39A /* TTGAppDelegate.h */,
 				6003F59D195388D20070C39A /* TTGAppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
-				6003F5A5195388D20070C39A /* TTGViewController.h */,
-				6003F5A6195388D20070C39A /* TTGViewController.m */,
-				6003F5A8195388D20070C39A /* Images.xcassets */,
-				6003F594195388D20070C39A /* Supporting Files */,
+				BFEBA5131DFDA3DE008BBB7D /* TTGDragToVerifyVC.h */,
+				BFEBA5141DFDA3DE008BBB7D /* TTGDragToVerifyVC.m */,
+				BFEBA5161DFDA4C4008BBB7D /* TTGSlideAndVerifyManuallyVC.h */,
+				BFEBA5171DFDA4C4008BBB7D /* TTGSlideAndVerifyManuallyVC.m */,
+				BFEBA50D1DFDA03D008BBB7D /* TTGSlideHorizontallyVC.h */,
+				BFEBA50E1DFDA03D008BBB7D /* TTGSlideHorizontallyVC.m */,
+				BFEBA5101DFDA133008BBB7D /* TTGSlideVerticalVC.h */,
+				BFEBA5111DFDA133008BBB7D /* TTGSlideVerticalVC.m */,
+				BFEBA5191DFDA86F008BBB7D /* TTGSquarePatternVC.h */,
+				BFEBA51A1DFDA86F008BBB7D /* TTGSquarePatternVC.m */,
+				BFEBA51C1DFDA87C008BBB7D /* TTGCirclePatternVC.h */,
+				BFEBA51D1DFDA87C008BBB7D /* TTGCirclePatternVC.m */,
+				BFEBA51F1DFDA887008BBB7D /* TTGCustomPatternVC.h */,
+				BFEBA5201DFDA887008BBB7D /* TTGCustomPatternVC.m */,
+				BFEBA5221DFDA892008BBB7D /* TTGCustomShadowVC.h */,
+				BFEBA5231DFDA892008BBB7D /* TTGCustomShadowVC.m */,
 			);
 			name = "Example for TTGPuzzleVerify";
 			path = TTGPuzzleVerify;
@@ -244,9 +282,12 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = TTG;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = zekunyan;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						ProvisioningStyle = Manual;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -278,6 +319,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				BFB7B31B1DF490930087C337 /* Launch Screen.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,9 +432,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFEBA5121DFDA133008BBB7D /* TTGSlideVerticalVC.m in Sources */,
 				6003F59E195388D20070C39A /* TTGAppDelegate.m in Sources */,
-				6003F5A7195388D20070C39A /* TTGViewController.m in Sources */,
+				BFEBA5181DFDA4C4008BBB7D /* TTGSlideAndVerifyManuallyVC.m in Sources */,
+				BFEBA5151DFDA3DE008BBB7D /* TTGDragToVerifyVC.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				BFEBA51B1DFDA86F008BBB7D /* TTGSquarePatternVC.m in Sources */,
+				BFEBA50F1DFDA03D008BBB7D /* TTGSlideHorizontallyVC.m in Sources */,
+				BFEBA5241DFDA892008BBB7D /* TTGCustomShadowVC.m in Sources */,
+				BFEBA51E1DFDA87C008BBB7D /* TTGCirclePatternVC.m in Sources */,
+				BFEBA5211DFDA887008BBB7D /* TTGCustomPatternVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,14 +496,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -467,7 +521,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -487,20 +541,25 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -512,12 +571,12 @@
 			baseConfigurationReference = 720F2DA642F551C634264584 /* Pods-TTGPuzzleVerify_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TTGPuzzleVerify/TTGPuzzleVerify-Prefix.pch";
 				INFOPLIST_FILE = "TTGPuzzleVerify/TTGPuzzleVerify-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.tutuge.TTGPuzzleVerify-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -528,12 +587,12 @@
 			baseConfigurationReference = B9856936AE09C30C22FD9E62 /* Pods-TTGPuzzleVerify_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TTGPuzzleVerify/TTGPuzzleVerify-Prefix.pch";
 				INFOPLIST_FILE = "TTGPuzzleVerify/TTGPuzzleVerify-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.tutuge.TTGPuzzleVerify-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

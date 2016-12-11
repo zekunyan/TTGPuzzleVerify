@@ -1,0 +1,6 @@
+framework module Pods_TTGPuzzleVerify_Example {
+  umbrella header "Pods-TTGPuzzleVerify_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

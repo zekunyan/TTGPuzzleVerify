@@ -2,7 +2,7 @@
 //  TTGAppDelegate.h
 //  TTGPuzzleVerify
 //
-//  Created by zekunyan on 12/05/2016.
+//  Created by tutuge on 2016/12/10.
 //  Copyright (c) 2016 zekunyan. All rights reserved.
 //
 

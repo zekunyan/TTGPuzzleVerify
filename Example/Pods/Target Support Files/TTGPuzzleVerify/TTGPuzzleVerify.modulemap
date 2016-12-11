@@ -1,0 +1,6 @@
+framework module TTGPuzzleVerify {
+  umbrella header "TTGPuzzleVerify-umbrella.h"
+
+  export *
+  module * { export * }
+}

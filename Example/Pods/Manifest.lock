@@ -1,0 +1,16 @@
+PODS:
+  - TTGPuzzleVerify (1.0.0)
+
+DEPENDENCIES:
+  - TTGPuzzleVerify (from `../`)
+
+EXTERNAL SOURCES:
+  TTGPuzzleVerify:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  TTGPuzzleVerify: e5158af0ae3690218dcc987a4959d4f88c617510
+
+PODFILE CHECKSUM: 7e4ceb58f6f45816cc30fb29f7869ef87e8276f0
+
+COCOAPODS: 1.2.0.beta.1

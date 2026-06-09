@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TTGPuzzleVerify Architecture</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #667085;
+      --line: rgba(20, 119, 255, 0.22);
+      --card: rgba(255, 255, 255, 0.86);
+      --blue: #1477ff;
+      --purple: #5b5cff;
+      --cyan: #08a7b7;
+      --green: #17b26a;
+      --orange: #f79009;
+      --pink: #ef4d7a;
+      --dark: #111827;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif; color: var(--ink); background: #eaf3ff; }
+
+    .canvas {
+      width: min(100vw, 1600px);
+      min-height: 1000px;
+      padding: 54px 68px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 18%, rgba(20,119,255,0.18), transparent 28%),
+        radial-gradient(circle at 10% 85%, rgba(0,169,157,0.22), transparent 30%),
+        linear-gradient(120deg, #eef7ff, #f8fbff);
+      box-shadow: 0 28px 80px rgba(15, 23, 42, 0.15);
+    }
+
+    .canvas::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(20,119,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20,119,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    header { position: relative; z-index: 2; display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 38px; }
+    .eyebrow { display: inline-flex; padding: 10px 16px; border-radius: 999px; background: white; color: var(--blue); font-weight: 900; box-shadow: 0 10px 24px rgba(20,119,255,0.12); }
+    h1 { margin: 18px 0 0; font-size: 60px; line-height: 0.94; letter-spacing: -0.065em; }
+    .subtitle { max-width: 540px; color: var(--muted); font-size: 20px; line-height: 1.35; font-weight: 700; text-align: right; }
+
+    .diagram { position: relative; z-index: 2; display: grid; grid-template-columns: 280px 1fr 300px; gap: 28px; align-items: stretch; }
+    .lane { display: grid; gap: 18px; }
+    .lane-title { margin: 0 0 2px; font-size: 16px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+
+    .card {
+      border: 1px solid rgba(17,24,39,0.08);
+      border-radius: 22px;
+      background: var(--card);
+      backdrop-filter: blur(22px);
+      box-shadow: 0 18px 44px rgba(15, 23, 42, 0.09);
+      padding: 20px;
+    }
+
+    .card h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 22px; letter-spacing: -0.035em; }
+    .card p { margin: 0; color: var(--muted); font-weight: 650; line-height: 1.34; font-size: 14px; }
+    .icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 12px; color: white; font-size: 15px; font-weight: 1000; flex: 0 0 auto; }
+    .blue { background: var(--blue); } .purple { background: var(--purple); } .cyan { background: var(--cyan); } .green { background: var(--green); } .orange { background: var(--orange); } .pink { background: var(--pink); }
+
+    .core {
+      border-radius: 34px;
+      padding: 28px;
+      background: rgba(255,255,255,0.68);
+      border: 1px solid rgba(20,119,255,0.16);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45), 0 26px 70px rgba(20,119,255,0.12);
+    }
+
+    .core-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+    .core-title h2 { margin: 0; font-size: 34px; letter-spacing: -0.055em; }
+    .pill { padding: 9px 14px; border-radius: 999px; color: var(--blue); background: #eaf3ff; font-weight: 900; }
+
+    .core-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .module { position: relative; min-height: 150px; padding: 20px; border-radius: 22px; border: 1px solid rgba(17,24,39,0.08); background: white; box-shadow: 0 16px 32px rgba(15,23,42,0.07); }
+    .module h3 { margin: 0 0 10px; font-size: 22px; letter-spacing: -0.04em; }
+    .module ul { margin: 0; padding-left: 18px; color: var(--muted); font-weight: 680; line-height: 1.55; font-size: 14px; }
+    .module::after { content: ""; position: absolute; left: 20px; right: 20px; bottom: 16px; height: 6px; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--cyan)); opacity: 0.58; }
+
+    .flow {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .step { position: relative; padding: 18px; border-radius: 20px; background: #111827; color: white; min-height: 116px; box-shadow: 0 18px 42px rgba(17,24,39,0.22); }
+    .step:not(:last-child)::after { content: "→"; position: absolute; right: -21px; top: 44px; color: var(--blue); font-size: 26px; font-weight: 1000; }
+    .step span { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 10px; background: var(--blue); font-size: 13px; font-weight: 1000; }
+    .step h4 { margin: 13px 0 6px; font-size: 17px; letter-spacing: -0.02em; }
+    .step p { margin: 0; color: #cbd5e1; font-size: 12px; line-height: 1.35; font-weight: 700; }
+
+    .footer { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; margin-top: 26px; color: var(--muted); font-weight: 900; }
+    .legend { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .chip { padding: 8px 12px; border-radius: 999px; background: white; box-shadow: 0 8px 18px rgba(15,23,42,0.08); }
+
+    @media print { body { background: white; } .canvas { box-shadow: none; width: 1600px; } }
+  </style>
+</head>
+<body>
+  <main class="canvas" role="img" aria-label="TTGPuzzleVerify architecture diagram">
+    <header>
+      <div>
+        <div class="eyebrow">Architecture overview</div>
+        <h1>TTGPuzzleVerify<br />Swift Core</h1>
+      </div>
+      <p class="subtitle">A Swift 5.9 verification view designed around rendering, interaction, metrics, state, and clean UIKit / SwiftUI / Objective-C integration.</p>
+    </header>
+
+    <section class="diagram">
+      <aside class="lane">
+        <h2 class="lane-title">Consumers</h2>
+        <article class="card"><h3><span class="icon blue">S</span>SwiftUI Demo</h3><p>Uses UIViewRepresentable bindings for verification state, progress, result summary, and callbacks.</p></article>
+        <article class="card"><h3><span class="icon cyan">U</span>Swift UIKit</h3><p>Direct view integration with configuration, horizontal mode, failure feedback, and result labels.</p></article>
+        <article class="card"><h3><span class="icon orange">O</span>Objective-C UIKit</h3><p>Imports the generated Swift header and uses bridged enums, delegate methods, and blocks.</p></article>
+      </aside>
+
+      <section class="core">
+        <div class="core-title"><h2>TTGPuzzleVerifyView</h2><span class="pill">UIKit UIView · @objc API</span></div>
+        <div class="core-grid">
+          <article class="module"><h3>Rendering Layer</h3><ul><li>Back image mask</li><li>Front hole mask</li><li>Puzzle piece mask</li><li>Inner and piece shadows</li></ul></article>
+          <article class="module"><h3>Pattern Engine</h3><ul><li>Classic puzzle path</li><li>Square / circle paths</li><li>Custom UIBezierPath</li><li>Scaled and translated masks</li></ul></article>
+          <article class="module"><h3>Interaction Engine</h3><ul><li>Pan gesture handling</li><li>Horizontal / vertical / both axes</li><li>Percentage setters</li><li>Clamped bounds</li></ul></article>
+          <article class="module"><h3>Verification State</h3><ul><li>Idle / dragging</li><li>Verified / failed</li><li>Retry and locked states</li><li>Auto-snap success</li></ul></article>
+          <article class="module"><h3>Metrics & Result</h3><ul><li>Track points</li><li>Timestamp and velocity</li><li>Elapsed time</li><li>Offset and drag distance</li></ul></article>
+          <article class="module"><h3>Configuration API</h3><ul><li>Behavior configuration</li><li>Style object</li><li>Delegate callbacks</li><li>Swift closures</li></ul></article>
+        </div>
+      </section>
+
+      <aside class="lane">
+        <h2 class="lane-title">Distribution</h2>
+        <article class="card"><h3><span class="icon purple">P</span>CocoaPods</h3><p>iOS 16.0 deployment target, Swift 5.9 metadata, local path examples.</p></article>
+        <article class="card"><h3><span class="icon green">M</span>Swift Package</h3><p>SPM manifest exposes the Swift source as the TTGPuzzleVerify library product.</p></article>
+        <article class="card"><h3><span class="icon pink">T</span>Tests</h3><p>Objective-C XCTest target validates bridging, configuration, callbacks, results, and track collection.</p></article>
+      </aside>
+
+      <div class="flow">
+        <article class="step"><span>1</span><h4>Configure</h4><p>Apply pattern, size, tolerance, axes, tracking, retry count, and style.</p></article>
+        <article class="step"><span>2</span><h4>Render</h4><p>Build masks for the image, blank hole, puzzle piece, and shadows.</p></article>
+        <article class="step"><span>3</span><h4>Interact</h4><p>Handle pan/slider changes with clamped x/y percentages.</p></article>
+        <article class="step"><span>4</span><h4>Verify</h4><p>Evaluate offsets, tolerance, state, auto-snap, or failure feedback.</p></article>
+        <article class="step"><span>5</span><h4>Report</h4><p>Emit delegate and closure callbacks with result and behavior metrics.</p></article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="legend"><span class="chip">Swift 5.9</span><span class="chip">iOS 16+</span><span class="chip">SwiftUI</span><span class="chip">UIKit</span><span class="chip">Objective-C</span></div>
+      <span>TTGPuzzleVerify · Puzzle verification component</span>
+    </footer>
+  </main>
+</body>
+</html>

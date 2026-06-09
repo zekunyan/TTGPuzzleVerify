@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TTGPuzzleVerify Promo Poster</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #667085;
+      --subtle: #eef4ff;
+      --blue: #1477ff;
+      --blue-2: #5b5cff;
+      --cyan: #07a7b7;
+      --teal: #00a99d;
+      --green: #17b26a;
+      --orange: #f79009;
+      --pink: #ef4d7a;
+      --card: rgba(255, 255, 255, 0.82);
+      --stroke: rgba(17, 24, 39, 0.08);
+      --shadow: 0 28px 80px rgba(15, 23, 42, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #eaf3ff;
+    }
+
+    .poster {
+      position: relative;
+      width: min(100vw, 1600px);
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      padding: 64px 80px;
+      background:
+        radial-gradient(circle at 80% 76%, rgba(22, 179, 175, 0.28), transparent 28%),
+        radial-gradient(circle at 10% 10%, rgba(20, 119, 255, 0.15), transparent 26%),
+        linear-gradient(120deg, rgba(238, 246, 255, 0.96), rgba(247, 250, 255, 0.96));
+      box-shadow: var(--shadow);
+    }
+
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(20, 119, 255, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 119, 255, 0.055) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(90deg, rgba(0,0,0,0.78), rgba(0,0,0,0.25));
+      pointer-events: none;
+    }
+
+    .content { position: relative; z-index: 2; height: 100%; display: grid; grid-template-columns: 560px 1fr; gap: 60px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      margin-bottom: 54px;
+      border-radius: 999px;
+      background: white;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 10px 30px rgba(20, 119, 255, 0.13);
+    }
+
+    h1 {
+      margin: 0;
+      letter-spacing: -0.075em;
+      line-height: 0.91;
+      font-size: 76px;
+      max-width: 540px;
+    }
+
+    .lead {
+      margin: 34px 0 44px;
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 25px;
+      line-height: 1.28;
+      font-weight: 700;
+    }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+
+    .feature-card {
+      min-height: 130px;
+      padding: 22px 22px 18px;
+      border: 1px solid var(--stroke);
+      border-radius: 18px;
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+    }
+
+    .feature-card h3 { margin: 0 0 10px; font-size: 21px; letter-spacing: -0.025em; }
+    .feature-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.24; font-weight: 650; }
+
+    .badges { position: absolute; left: 80px; bottom: 36px; display: flex; align-items: center; gap: 14px; font-weight: 900; }
+    .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--blue); }
+    .badge-muted { color: var(--muted); }
+
+    .showcase { position: relative; }
+
+    .phone {
+      position: absolute;
+      left: 22px;
+      top: 0;
+      width: 360px;
+      height: 720px;
+      border: 18px solid #111827;
+      border-radius: 50px;
+      background: #f8fbff;
+      box-shadow: 0 32px 70px rgba(17, 24, 39, 0.24);
+      overflow: hidden;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 120px;
+      height: 28px;
+      transform: translateX(-50%);
+      border-radius: 0 0 18px 18px;
+      background: #111827;
+      z-index: 5;
+    }
+
+    .phone-screen { padding: 54px 24px 24px; height: 100%; }
+    .status { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; font-size: 13px; font-weight: 900; }
+    .phone-title { margin: 0; font-size: 29px; letter-spacing: -0.055em; line-height: 0.95; }
+    .phone-subtitle { margin: 6px 0 22px; color: var(--muted); font-weight: 700; font-size: 13px; }
+
+    .puzzle-panel {
+      position: relative;
+      height: 300px;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(20, 119, 255, 0.92), rgba(0, 169, 157, 0.8)),
+        url("../TTGPuzzleVerify.jpeg") center / cover;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4), 0 18px 40px rgba(20,119,255,0.24);
+    }
+
+    .puzzle-panel::before {
+      content: "";
+      position: absolute;
+      left: 196px;
+      top: 86px;
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      background: rgba(10, 20, 40, 0.36);
+      box-shadow: inset 0 0 26px rgba(0,0,0,0.34);
+      clip-path: path("M14 57 C20 49 32 52 32 62 L32 80 L52 80 C48 71 55 64 64 64 C74 64 82 71 78 80 L96 80 L96 58 C86 62 80 55 80 46 C80 36 86 30 96 34 L96 16 L76 16 C80 7 73 0 64 0 C55 0 48 7 52 16 L32 16 L32 36 C24 31 14 37 14 47 C14 52 17 55 14 57Z");
+    }
+
+    .piece {
+      position: absolute;
+      left: 34px;
+      top: 86px;
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.84);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.30);
+      clip-path: path("M14 57 C20 49 32 52 32 62 L32 80 L52 80 C48 71 55 64 64 64 C74 64 82 71 78 80 L96 80 L96 58 C86 62 80 55 80 46 C80 36 86 30 96 34 L96 16 L76 16 C80 7 73 0 64 0 C55 0 48 7 52 16 L32 16 L32 36 C24 31 14 37 14 47 C14 52 17 55 14 57Z");
+    }
+
+    .slider {
+      position: absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 28px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.38);
+    }
+
+    .slider::before { content: ""; position: absolute; left: 0; width: 46%; height: 100%; border-radius: inherit; background: white; }
+    .slider::after { content: ""; position: absolute; left: 42%; top: 50%; width: 38px; height: 38px; border-radius: 50%; transform: translateY(-50%); background: white; box-shadow: 0 10px 20px rgba(0,0,0,0.22); }
+
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .tag { padding: 9px 13px; color: white; font-size: 13px; font-weight: 900; border-radius: 999px; box-shadow: 0 8px 18px rgba(15,23,42,0.12); }
+    .tag.blue { background: var(--blue); } .tag.purple { background: var(--blue-2); } .tag.teal { background: var(--teal); } .tag.orange { background: var(--orange); } .tag.pink { background: var(--pink); }
+
+    .float-card {
+      position: absolute;
+      border: 1px solid var(--stroke);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 28px 62px rgba(15, 23, 42, 0.14);
+      padding: 24px;
+    }
+
+    .float-card h2 { margin: 8px 0 20px; font-size: 31px; line-height: 0.96; letter-spacing: -0.055em; }
+    .float-card .label { color: var(--blue); font-size: 15px; font-weight: 900; }
+    .pill { display: inline-flex; padding: 9px 14px; border-radius: 999px; background: #eff6ff; color: var(--blue); font-weight: 900; font-size: 14px; }
+
+    .security { top: 40px; right: 0; width: 620px; }
+    .swift { top: 330px; right: 16px; width: 570px; }
+    .metrics { left: 260px; bottom: 28px; width: 630px; padding: 22px 24px; border-radius: 20px; color: white; background: #111827; box-shadow: 0 24px 54px rgba(17,24,39,0.34); }
+
+    .columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .mini-card { padding: 16px; border: 1px solid var(--stroke); border-radius: 16px; background: #f8fbff; min-height: 104px; }
+    .mini-card strong { display: block; font-size: 16px; margin: 10px 0 4px; letter-spacing: -0.02em; }
+    .mini-card span { display: block; color: var(--muted); font-size: 12px; line-height: 1.2; font-weight: 650; }
+    .icon { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; color: white; font-weight: 1000; }
+    .icon.blue { background: var(--blue); } .icon.green { background: var(--green); } .icon.pink { background: var(--pink); }
+
+    .metric-title { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 16px; font-size: 18px; font-weight: 900; letter-spacing: -0.02em; }
+    .meter-grid { display: grid; grid-template-columns: 1.1fr 1fr 0.95fr; gap: 18px; }
+    .meter span { display: block; color: #cbd5e1; font-size: 12px; font-weight: 800; margin-bottom: 8px; }
+    .bar { height: 10px; border-radius: 999px; background: rgba(255,255,255,0.16); overflow: hidden; }
+    .fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+
+    @media print { body { background: white; } .poster { box-shadow: none; width: 1600px; } }
+  </style>
+</head>
+<body>
+  <main class="poster" role="img" aria-label="TTGPuzzleVerify promotional poster">
+    <section class="content">
+      <div>
+        <div class="eyebrow">Swift-first puzzle verification for iOS</div>
+        <h1>TTGPuzzle<br />Verify</h1>
+        <p class="lead">A modern, customizable puzzle verification component with Swift 5.9, Objective-C compatibility, SwiftUI demos, and behavior metrics.</p>
+
+        <div class="feature-grid">
+          <article class="feature-card"><h3>Swift 5.9 Core</h3><p>Typed enums, result objects, configuration, style, and SPM-ready structure.</p></article>
+          <article class="feature-card"><h3>Security Signals</h3><p>Track points, velocity, elapsed time, drag distance, and retry locking.</p></article>
+          <article class="feature-card"><h3>Flexible Puzzle UX</h3><p>Classic, square, circle, or custom shapes with horizontal, vertical, or free drag.</p></article>
+          <article class="feature-card"><h3>Dual Examples</h3><p>Separate Objective-C UIKit and Swift UIKit + SwiftUI projects.</p></article>
+        </div>
+      </div>
+
+      <div class="showcase">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="status"><span>9:41</span><span>● ● ●</span></div>
+            <h2 class="phone-title">Puzzle Verify</h2>
+            <p class="phone-subtitle">Drag the piece, verify behavior, and snap into place.</p>
+            <div class="puzzle-panel"><div class="piece"></div><div class="slider"></div></div>
+            <div class="tag-cloud">
+              <span class="tag blue">Swift</span><span class="tag purple">SPM</span><span class="tag teal">SwiftUI</span><span class="tag orange">UIKit</span><span class="tag pink">ObjC</span>
+              <span class="tag teal">Track</span><span class="tag blue">State</span><span class="tag purple">Config</span>
+            </div>
+          </div>
+        </div>
+
+        <article class="float-card security">
+          <div style="display:flex;justify-content:space-between;align-items:start;gap:20px"><span class="label">Verification intelligence</span><span class="pill">Behavior-aware</span></div>
+          <h2>More than a Boolean result.</h2>
+          <div class="columns">
+            <div class="mini-card"><div class="icon blue">Δ</div><strong>Offsets</strong><span>x/y tolerance and final puzzle distance.</span></div>
+            <div class="mini-card"><div class="icon green">T</div><strong>Track Points</strong><span>Timestamp and velocity samples.</span></div>
+            <div class="mini-card"><div class="icon pink">L</div><strong>Retry Lock</strong><span>Failure, lock, reset, and unlock flow.</span></div>
+          </div>
+        </article>
+
+        <article class="float-card swift">
+          <div style="display:flex;justify-content:space-between;align-items:start;gap:20px"><span class="label">Integration ready</span><span class="pill">iOS 16+</span></div>
+          <h2>Swift API, Objective-C bridge, separate demos.</h2>
+          <div class="columns">
+            <div class="mini-card"><div class="icon blue">S</div><strong>SwiftUI</strong><span>UIViewRepresentable sample with bindings.</span></div>
+            <div class="mini-card"><div class="icon green">U</div><strong>UIKit</strong><span>Swift and Objective-C app examples.</span></div>
+            <div class="mini-card"><div class="icon pink">C</div><strong>Config</strong><span>Centralized behavior and styling.</span></div>
+          </div>
+        </article>
+
+        <article class="metrics">
+          <div class="metric-title"><span>Modern verification toolkit</span><span>Swift Package · CocoaPods · Objective-C Compatible</span></div>
+          <div class="meter-grid">
+            <div class="meter"><span>Customizable UX</span><div class="bar"><div class="fill" style="width:92%"></div></div></div>
+            <div class="meter"><span>Behavior Metrics</span><div class="bar"><div class="fill" style="width:86%"></div></div></div>
+            <div class="meter"><span>Demo Coverage</span><div class="bar"><div class="fill" style="width:88%"></div></div></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="badges"><span>Swift 5.9</span><span class="dot"></span><span class="badge-muted">iOS 16+</span><span class="dot"></span><span class="badge-muted">Puzzle Verification</span></div>
+  </main>
+</body>
+</html>

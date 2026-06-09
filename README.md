@@ -28,6 +28,15 @@ TTGPuzzleVerify is an iOS puzzle verification component. The core is implemented
 * Centralized configuration and style objects.
 * Success and failure feedback animations.
 
+## Marketing assets
+
+Editable HTML marketing assets are available under `Resources/Marketing`:
+
+* `promo_poster.html` for a 16:9 promotional poster.
+* `architecture_diagram.html` for the component architecture and verification flow.
+
+Open the HTML files in a browser and export to PNG/PDF when needed.
+
 ## Examples
 
 The repository includes two runnable example apps:

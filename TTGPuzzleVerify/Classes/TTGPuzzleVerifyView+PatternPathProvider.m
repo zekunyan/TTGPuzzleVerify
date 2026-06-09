@@ -21,6 +21,8 @@
         case TTGPuzzleVerifyCustomPattern:
             return [self classicPuzzlePath];
     }
+
+    return [self classicPuzzlePath];
 }
 
 #pragma mark - Private 

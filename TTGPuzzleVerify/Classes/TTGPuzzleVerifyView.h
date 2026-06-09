@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * TTGPuzzleVerifyView pattern type
  */
@@ -35,15 +37,15 @@ typedef NS_ENUM(NSInteger, TTGPuzzleVerifyPattern) {
  * TTGPuzzleVerifyView
  */
 @interface TTGPuzzleVerifyView : UIView
-@property (nonatomic, strong) UIImage *image; // Image for verification
+@property (nonatomic, strong, nullable) UIImage *image; // Image for verification
 
 // Puzzle pattern, default is TTGPuzzleVerifyClassicPattern
 @property (nonatomic, assign) TTGPuzzleVerifyPattern puzzlePattern;
 
 // Custom path for puzzle shape. Only work when puzzlePattern is TTGPuzzleVerifyCustomPattern
-@property (nonatomic, strong) UIBezierPath *customPuzzlePatternPath;
+@property (nonatomic, strong, nullable) UIBezierPath *customPuzzlePatternPath;
 
-// Puzzle rect size，not for TTGPuzzleVerifyCustomPattern pattern
+// Puzzle rect size, not for TTGPuzzleVerifyCustomPattern pattern
 @property (nonatomic, assign) CGSize puzzleSize;
 
 // Puzzle blank position
@@ -61,7 +63,7 @@ typedef NS_ENUM(NSInteger, TTGPuzzleVerifyPattern) {
 @property (nonatomic, assign, readonly) BOOL isVerified; // Verification boolean
 
 // Enable
-@property (nonatomic, assign) BOOL enable;
+@property (nonatomic, assign, getter=isEnabled) BOOL enable;
 
 /**
  * Style
@@ -83,15 +85,21 @@ typedef NS_ENUM(NSInteger, TTGPuzzleVerifyPattern) {
 @property (nonatomic, assign) CGSize puzzleShadowOffset; // Default: (0, 0)
 
 // Callback
-@property (nonatomic, weak) id <TTGPuzzleVerifyViewDelegate> delegate; // Callback delegate
-@property (nonatomic, copy) void (^verificationChangeBlock)(TTGPuzzleVerifyView *puzzleVerifyView, BOOL isVerified); // verification changed callback block
-
+@property (nonatomic, weak, nullable) id <TTGPuzzleVerifyViewDelegate> delegate; // Callback delegate
+@property (nonatomic, copy, nullable) void (^verificationChangeBlock)(TTGPuzzleVerifyView *puzzleVerifyView, BOOL isVerified); // verification changed callback block
 
 /**
- Complete verification. Call this with set the puzzle to its original position and fill the blank.
+ Complete verification. Call this to move the puzzle to its blank position and fill the blank.
 
  @param withAnimation if show animation
  */
 - (void)completeVerificationWithAnimation:(BOOL)withAnimation;
 
+/**
+ Reset verification. Call this to move the puzzle back to the default start position.
+ */
+- (void)resetVerification;
+
 @end
+
+NS_ASSUME_NONNULL_END

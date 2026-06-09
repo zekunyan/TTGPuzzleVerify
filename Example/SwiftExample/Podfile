@@ -1,0 +1,8 @@
+platform :ios, '16.0'
+use_frameworks!
+
+project 'TTGPuzzleVerifySwiftExample.xcodeproj'
+
+target 'TTGPuzzleVerifySwiftExample' do
+  pod 'TTGPuzzleVerify', :path => '../../'
+end

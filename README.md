@@ -18,21 +18,27 @@ By completing **image puzzle game**, TTGPuzzleVerify is a **more user-friendly**
 * Classic, square, circle or custom puzzle shape
 * Slide horizontally or vertically or drag the puzzle directly
 
-## Example
+## Examples
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+The repository now includes two runnable example apps:
+
+* Objective-C UIKit example: run `pod install` from the `Example` directory, then open `Example/TTGPuzzleVerify.xcworkspace`.
+* Swift 5.9 example with UIKit and SwiftUI demos: run `pod install` from `Example/SwiftExample`, then open `Example/SwiftExample/TTGPuzzleVerifySwiftExample.xcworkspace`.
 
 ## Requirements
-iOS 7 and later.
+iOS 16.0 and later. Swift 5.9 is used for SwiftPM/CocoaPods metadata and the Swift example.
 
 ## Installation
 
 TTGPuzzleVerify is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+it, set an iOS 16 deployment target and add the following line to your Podfile:
 
 ```ruby
+platform :ios, '16.0'
 pod "TTGPuzzleVerify"
 ```
+
+Swift Package Manager is also supported for iOS 16+ projects by adding this repository as a package dependency.
 
 ## Usage
 `TTGPuzzleVerifyView`
@@ -94,14 +100,19 @@ typedef NS_ENUM(NSInteger, TTGPuzzleVerifyPattern) {
 @property (nonatomic, strong) UIBezierPath *customPuzzlePatternPath;
 ```
 
-#### Complete the puzzle with animation
+#### Complete or reset the puzzle
 ```
 /**
- Complete verification. Call this with set the puzzle to its original position and fill the blank.
+ Complete verification. Call this to move the puzzle to its blank position and fill the blank.
 
  @param withAnimation if show animation
  */
 - (void)completeVerificationWithAnimation:(BOOL)withAnimation;
+
+/**
+ Reset verification. Call this to move the puzzle back to the default start position.
+ */
+- (void)resetVerification;
 ```
 
 #### Callback
@@ -171,9 +182,6 @@ typedef NS_ENUM(NSInteger, TTGPuzzleVerifyPattern) {
 @property (nonatomic, assign) CGFloat puzzleShadowOpacity; // Default: 0.5
 @property (nonatomic, assign) CGSize puzzleShadowOffset; // Default: (0, 0)
 ```
-
-## Example
-For more information, you can download the zip and run the example.
 
 ## Author
 

@@ -13,7 +13,8 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/zekunyan/TTGPuzzleVerify.git', :tag => s.version.to_s }
   s.social_media_url = 'http://tutuge.me'
 
-  s.ios.deployment_target = '7.0'
+  s.platform         = :ios, '16.0'
+  s.swift_version    = '5.9'
   s.requires_arc     = true
 
   s.source_files = 'TTGPuzzleVerify/Classes/**/*'

@@ -15,7 +15,7 @@ It includes:
 ## Run
 
 ```sh
-cd Example/SwiftExample
+cd Examples/SwiftExample
 pod install
 open TTGPuzzleVerifySwiftExample.xcworkspace
 ```

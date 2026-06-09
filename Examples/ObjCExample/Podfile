@@ -2,11 +2,9 @@ platform :ios, '16.0'
 use_frameworks!
 
 target 'TTGPuzzleVerify_Example' do
-  pod 'TTGPuzzleVerify', :path => '../'
+  pod 'TTGPuzzleVerify', :path => '../../'
 
   target 'TTGPuzzleVerify_Tests' do
     inherit! :search_paths
-
-    
   end
 end

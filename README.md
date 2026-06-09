@@ -32,8 +32,8 @@ TTGPuzzleVerify is an iOS puzzle verification component. The core is implemented
 
 The repository includes two runnable example apps:
 
-* Objective-C UIKit example: run `pod install` from the `Example` directory, then open `Example/TTGPuzzleVerify.xcworkspace`.
-* Swift 5.9 example with UIKit and SwiftUI demos: run `pod install` from `Example/SwiftExample`, then open `Example/SwiftExample/TTGPuzzleVerifySwiftExample.xcworkspace`.
+* Objective-C UIKit example: run `pod install` from the `Examples/ObjCExample` directory, then open `Examples/ObjCExample/TTGPuzzleVerify.xcworkspace`.
+* Swift 5.9 example with UIKit and SwiftUI demos: run `pod install` from `Examples/SwiftExample`, then open `Examples/SwiftExample/TTGPuzzleVerifySwiftExample.xcworkspace`.
 
 ## Requirements
 
@@ -189,7 +189,7 @@ Objective-C tests cover default configuration, clamping, percentage mapping, ver
 Run the tests from macOS with Xcode:
 
 ```sh
-cd Example
+cd Examples/ObjCExample
 pod install
 xcodebuild -workspace TTGPuzzleVerify.xcworkspace -scheme TTGPuzzleVerify-Example -destination 'platform=iOS Simulator,name=iPhone 15' test
 ```

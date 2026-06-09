@@ -40,3 +40,8 @@ Carthage/Build
 
 # AppCode
 .idea/
+
+# CocoaPods generated artifacts for standalone examples.
+Examples/*/Pods/
+Examples/*/*.xcworkspace/
+Examples/*/Podfile.lock

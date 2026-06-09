@@ -23,7 +23,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dF3-Hq-KUJ" customClass="TTGPuzzleVerifyView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dF3-Hq-KUJ" customClass="TTGPuzzleVerifyView" customModule="TTGPuzzleVerify">
                                 <rect key="frame" x="27" y="76" width="320" height="205"/>
                                 <color key="backgroundColor" red="0.79607844350000001" green="0.79607844350000001" blue="0.79607844350000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -93,7 +93,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lX8-fo-BtF" customClass="TTGPuzzleVerifyView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lX8-fo-BtF" customClass="TTGPuzzleVerifyView" customModule="TTGPuzzleVerify">
                                 <rect key="frame" x="27" y="76" width="320" height="205"/>
                                 <color key="backgroundColor" red="0.79607844350000001" green="0.79607844350000001" blue="0.79607844350000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -163,7 +163,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ovr-c0-pMr" customClass="TTGPuzzleVerifyView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ovr-c0-pMr" customClass="TTGPuzzleVerifyView" customModule="TTGPuzzleVerify">
                                 <rect key="frame" x="27" y="76" width="320" height="205"/>
                                 <color key="backgroundColor" red="0.79607844350000001" green="0.79607844350000001" blue="0.79607844350000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -224,7 +224,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l0k-ZA-aSV" customClass="TTGPuzzleVerifyView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l0k-ZA-aSV" customClass="TTGPuzzleVerifyView" customModule="TTGPuzzleVerify">
                                 <rect key="frame" x="27" y="76" width="320" height="205"/>
                                 <color key="backgroundColor" red="0.79607844350000001" green="0.79607844350000001" blue="0.79607844350000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -547,7 +547,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MnD-oH-kyr" customClass="TTGPuzzleVerifyView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MnD-oH-kyr" customClass="TTGPuzzleVerifyView" customModule="TTGPuzzleVerify">
                                 <rect key="frame" x="27" y="76" width="320" height="205"/>
                                 <color key="backgroundColor" red="0.79607844350000001" green="0.79607844350000001" blue="0.79607844350000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -608,7 +608,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghY-YY-wax" customClass="TTGPuzzleVerifyView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghY-YY-wax" customClass="TTGPuzzleVerifyView" customModule="TTGPuzzleVerify">
                                 <rect key="frame" x="27" y="76" width="320" height="205"/>
                                 <color key="backgroundColor" red="0.79607844350000001" green="0.79607844350000001" blue="0.79607844350000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -669,7 +669,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0GF-se-hZt" customClass="TTGPuzzleVerifyView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0GF-se-hZt" customClass="TTGPuzzleVerifyView" customModule="TTGPuzzleVerify">
                                 <rect key="frame" x="27" y="76" width="320" height="205"/>
                                 <color key="backgroundColor" red="0.79607844350000001" green="0.79607844350000001" blue="0.79607844350000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -730,7 +730,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rEc-3m-gjK" customClass="TTGPuzzleVerifyView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rEc-3m-gjK" customClass="TTGPuzzleVerifyView" customModule="TTGPuzzleVerify">
                                 <rect key="frame" x="27" y="76" width="320" height="205"/>
                                 <color key="backgroundColor" red="0.79607844350000001" green="0.79607844350000001" blue="0.79607844350000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>

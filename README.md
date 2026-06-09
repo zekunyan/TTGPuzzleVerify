@@ -41,12 +41,12 @@ pod "TTGPuzzleVerify"
 Swift Package Manager is also supported for iOS 16+ projects by adding this repository as a package dependency.
 
 ## Usage
-`TTGPuzzleVerifyView`
+`TTGPuzzleVerifyView` (implemented in Swift and exposed to Objective-C)
 
 ### Basic use
 ```
 // Import
-#import <TTGPuzzleVerify/TTGPuzzleVerifyView.h>
+#import <TTGPuzzleVerify/TTGPuzzleVerify-Swift.h>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -87,16 +87,16 @@ Swift Package Manager is also supported for iOS 16+ projects by adding this repo
  * TTGPuzzleVerifyView pattern type
  */
 typedef NS_ENUM(NSInteger, TTGPuzzleVerifyPattern) {
-    TTGPuzzleVerifyClassicPattern = 0, // Default
-    TTGPuzzleVerifySquarePattern,
-    TTGPuzzleVerifyCirclePattern,
-    TTGPuzzleVerifyCustomPattern
+    TTGPuzzleVerifyPatternClassicPattern = 0, // Default
+    TTGPuzzleVerifyPatternSquarePattern,
+    TTGPuzzleVerifyPatternCirclePattern,
+    TTGPuzzleVerifyPatternCustomPattern
 };
 
-// Puzzle pattern, default is TTGPuzzleVerifyClassicPattern
+// Puzzle pattern, default is TTGPuzzleVerifyPatternClassicPattern
 @property (nonatomic, assign) TTGPuzzleVerifyPattern puzzlePattern;
 
-// Custom path for puzzle shape. Only work when puzzlePattern is TTGPuzzleVerifyCustomPattern
+// Custom path for puzzle shape. Only work when puzzlePattern is TTGPuzzleVerifyPatternCustomPattern
 @property (nonatomic, strong) UIBezierPath *customPuzzlePatternPath;
 ```
 
@@ -140,7 +140,7 @@ typedef NS_ENUM(NSInteger, TTGPuzzleVerifyPattern) {
 
 #### Puzzle size and position
 ```
-// Puzzle rect size，not for TTGPuzzleVerifyCustomPattern pattern
+// Puzzle rect size，not for TTGPuzzleVerifyPatternCustomPattern pattern
 @property (nonatomic, assign) CGSize puzzleSize;
 
 // Puzzle blank position

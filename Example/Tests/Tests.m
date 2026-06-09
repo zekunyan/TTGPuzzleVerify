@@ -7,7 +7,7 @@
 //
 
 @import XCTest;
-@import TTGPuzzleVerify;
+#import <TTGPuzzleVerify/TTGPuzzleVerify-Swift.h>
 
 @interface Tests : XCTestCase <TTGPuzzleVerifyViewDelegate>
 @property (nonatomic, assign) BOOL delegateVerificationValue;
@@ -30,8 +30,8 @@
 - (void)testDefaultConfigurationIsStable {
     TTGPuzzleVerifyView *view = [[TTGPuzzleVerifyView alloc] initWithFrame:CGRectMake(0, 0, 320, 240)];
 
-    XCTAssertTrue(view.isEnabled);
-    XCTAssertEqual(view.puzzlePattern, TTGPuzzleVerifyClassicPattern);
+    XCTAssertTrue(view.enable);
+    XCTAssertEqual(view.puzzlePattern, TTGPuzzleVerifyPatternClassicPattern);
     XCTAssertEqualWithAccuracy(view.puzzleSize.width, 100, 0.001);
     XCTAssertEqualWithAccuracy(view.puzzleSize.height, 100, 0.001);
     XCTAssertEqualWithAccuracy(view.verificationTolerance, 8, 0.001);

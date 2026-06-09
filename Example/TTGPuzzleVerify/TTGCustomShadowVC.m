@@ -7,7 +7,7 @@
 //
 
 #import "TTGCustomShadowVC.h"
-#import <TTGPuzzleVerify/TTGPuzzleVerifyView.h>
+#import <TTGPuzzleVerify/TTGPuzzleVerify-Swift.h>
 
 @interface TTGCustomShadowVC () <TTGPuzzleVerifyViewDelegate>
 @property (weak, nonatomic) IBOutlet TTGPuzzleVerifyView *puzzleVerifyView;

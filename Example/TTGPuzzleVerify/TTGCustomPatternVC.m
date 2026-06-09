@@ -7,7 +7,7 @@
 //
 
 #import "TTGCustomPatternVC.h"
-#import <TTGPuzzleVerify/TTGPuzzleVerifyView.h>
+#import <TTGPuzzleVerify/TTGPuzzleVerify-Swift.h>
 
 @interface TTGCustomPatternVC () <TTGPuzzleVerifyViewDelegate>
 @property (weak, nonatomic) IBOutlet TTGPuzzleVerifyView *puzzleVerifyView;
@@ -25,7 +25,7 @@
     _puzzleVerifyView.puzzleXPercentage = 0.1;
     _puzzleVerifyView.puzzleBlankAlpha = 0.1;
     
-    _puzzleVerifyView.puzzlePattern = TTGPuzzleVerifyCustomPattern;
+    _puzzleVerifyView.puzzlePattern = TTGPuzzleVerifyPatternCustomPattern;
     _puzzleVerifyView.customPuzzlePatternPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 80, 80) cornerRadius:20];
     
     _puzzleVerifyView.delegate = self;

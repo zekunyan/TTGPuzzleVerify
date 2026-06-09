@@ -17,6 +17,5 @@ Pod::Spec.new do |s|
   s.swift_version    = '5.9'
   s.requires_arc     = true
 
-  s.source_files = 'TTGPuzzleVerify/Classes/**/*'
-  s.public_header_files = 'TTGPuzzleVerify/Classes/**/*.h'
+  s.source_files = 'TTGPuzzleVerify/Classes/**/*.swift'
 end

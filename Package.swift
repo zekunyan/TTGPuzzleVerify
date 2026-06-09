@@ -13,7 +13,7 @@ let package = Package(
         .target(
             name: "TTGPuzzleVerify",
             path: "TTGPuzzleVerify/Classes",
-            publicHeadersPath: "."
+            sources: ["TTGPuzzleVerifyView.swift"]
         )
     ]
 )

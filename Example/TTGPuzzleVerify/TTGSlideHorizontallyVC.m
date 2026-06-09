@@ -7,7 +7,7 @@
 //
 
 #import "TTGSlideHorizontallyVC.h"
-#import <TTGPuzzleVerify/TTGPuzzleVerifyView.h>
+#import <TTGPuzzleVerify/TTGPuzzleVerify-Swift.h>
 
 @interface TTGSlideHorizontallyVC () <TTGPuzzleVerifyViewDelegate>
 @property (weak, nonatomic) IBOutlet TTGPuzzleVerifyView *puzzleVerifyView;

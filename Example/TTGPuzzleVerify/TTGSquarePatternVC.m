@@ -7,7 +7,7 @@
 //
 
 #import "TTGSquarePatternVC.h"
-#import <TTGPuzzleVerify/TTGPuzzleVerifyView.h>
+#import <TTGPuzzleVerify/TTGPuzzleVerify-Swift.h>
 
 @interface TTGSquarePatternVC () <TTGPuzzleVerifyViewDelegate>
 @property (weak, nonatomic) IBOutlet TTGPuzzleVerifyView *puzzleVerifyView;
@@ -20,7 +20,7 @@
     [super viewDidLoad];
     
     _puzzleVerifyView.image = [UIImage imageNamed:@"pic3"];
-    _puzzleVerifyView.puzzlePattern = TTGPuzzleVerifySquarePattern;
+    _puzzleVerifyView.puzzlePattern = TTGPuzzleVerifyPatternSquarePattern;
     _puzzleVerifyView.puzzleBlankPosition = CGPointMake(200, 40);
     _puzzleVerifyView.puzzlePosition = CGPointMake(10, 40);
     _puzzleVerifyView.puzzleXPercentage = 0.1;

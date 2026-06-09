@@ -11,11 +11,11 @@
 
 ## What
 
-TTGPuzzleVerify is an iOS puzzle verification component. The core is implemented in Swift 5.9, exposed to Objective-C, and supports UIKit, Swift UIKit, and SwiftUI integration.
+TTGPuzzleVerify is an iOS puzzle verification component. The core is implemented as a native iOS view, exposed to Objective-C, and supports UIKit, Swift UIKit, and SwiftUI integration.
 
 ## Features
 
-* Swift 5.9 implementation with Objective-C interoperability.
+* Native iOS implementation with Objective-C interoperability.
 * iOS 16+ CocoaPods and Swift Package Manager support.
 * Classic, square, circle, and custom puzzle paths.
 * Horizontal-only, vertical-only, or free two-axis dragging.
@@ -42,12 +42,11 @@ Open the HTML files in a browser and export to PNG/PDF when needed.
 The repository includes two runnable example apps:
 
 * Objective-C UIKit example: run `pod install` from the `Examples/ObjCExample` directory, then open `Examples/ObjCExample/TTGPuzzleVerify.xcworkspace`.
-* Swift 5.9 example with UIKit and SwiftUI demos: run `pod install` from `Examples/SwiftExample`, then open `Examples/SwiftExample/TTGPuzzleVerifySwiftExample.xcworkspace`.
+* Swift example with UIKit and SwiftUI demos: run `pod install` from `Examples/SwiftExample`, then open `Examples/SwiftExample/TTGPuzzleVerifySwiftExample.xcworkspace`.
 
 ## Requirements
 
 * iOS 16.0+
-* Swift 5.9+
 * Xcode 15+
 
 ## Installation

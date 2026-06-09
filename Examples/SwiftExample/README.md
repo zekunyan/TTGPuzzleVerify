@@ -1,6 +1,6 @@
 # TTGPuzzleVerify Swift Example
 
-This Swift 5.9 / iOS 16 example demonstrates the modern Swift core API.
+This iOS 16 example demonstrates the modern native core API.
 
 It includes:
 

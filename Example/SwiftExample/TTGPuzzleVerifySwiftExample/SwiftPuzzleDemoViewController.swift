@@ -17,11 +17,15 @@ final class SwiftPuzzleDemoViewController: UIViewController, TTGPuzzleVerifyView
     private func configurePuzzleView() {
         puzzleView.translatesAutoresizingMaskIntoConstraints = false
         puzzleView.image = UIImage.ttg_demoGradientImage(size: CGSize(width: 640, height: 400))
-        puzzleView.puzzlePattern = .circlePattern
-        puzzleView.puzzleSize = CGSize(width: 92, height: 92)
+        let configuration = TTGPuzzleVerifyConfiguration()
+        configuration.puzzlePattern = .circlePattern
+        configuration.puzzleSize = CGSize(width: 92, height: 92)
+        configuration.verificationTolerance = 7
+        configuration.allowedAxes = .horizontal
+        puzzleView.applyConfiguration(configuration)
+        puzzleView.failureAnimation = .shakeAndReset
         puzzleView.puzzleBlankPosition = CGPoint(x: 210, y: 86)
         puzzleView.puzzlePosition = CGPoint(x: 24, y: 86)
-        puzzleView.verificationTolerance = 7
         puzzleView.delegate = self
         puzzleView.layer.cornerRadius = 18
         puzzleView.layer.masksToBounds = true
@@ -30,7 +34,7 @@ final class SwiftPuzzleDemoViewController: UIViewController, TTGPuzzleVerifyView
 
     private func configureControls() {
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.text = "Not verified"
+        statusLabel.text = "Not verified · horizontal mode"
         statusLabel.font = .preferredFont(forTextStyle: .headline)
 
         horizontalSlider.translatesAutoresizingMaskIntoConstraints = false
@@ -79,11 +83,11 @@ final class SwiftPuzzleDemoViewController: UIViewController, TTGPuzzleVerifyView
 
     @objc private func resetTapped() {
         puzzleView.resetVerification()
-        statusLabel.text = "Not verified"
+        statusLabel.text = "Not verified · horizontal mode"
     }
 
     func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView, didChangedVerification isVerified: Bool) {
-        statusLabel.text = isVerified ? "Verified" : "Not verified"
+        statusLabel.text = isVerified ? "Verified" : "Not verified · horizontal mode"
     }
 
     func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView,
@@ -91,5 +95,13 @@ final class SwiftPuzzleDemoViewController: UIViewController, TTGPuzzleVerifyView
                           xPercentage: CGFloat,
                           yPercentage: CGFloat) {
         horizontalSlider.value = Float(xPercentage)
+    }
+
+    func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView, didCompleteWith result: TTGPuzzleVerifyResult) {
+        statusLabel.text = "Verified · points: \(result.interactionCount)"
+    }
+
+    func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView, didFailWith result: TTGPuzzleVerifyResult) {
+        statusLabel.text = "Failed · offset: \(Int(result.xOffset))"
     }
 }

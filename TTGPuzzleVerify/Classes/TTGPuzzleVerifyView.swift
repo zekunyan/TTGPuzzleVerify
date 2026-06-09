@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Built-in puzzle shapes. Use `.customPattern` with `customPuzzlePatternPath` for custom shapes.
 @objc(TTGPuzzleVerifyPattern)
 public enum TTGPuzzleVerifyPattern: Int {
     case classicPattern = 0
@@ -16,6 +17,203 @@ public enum TTGPuzzleVerifyPattern: Int {
     case customPattern
 }
 
+/// Axis policy for user pan gestures.
+@objc(TTGPuzzleVerifyAllowedAxes)
+public enum TTGPuzzleVerifyAllowedAxes: Int {
+    case horizontal = 0
+    case vertical
+    case both
+}
+
+/// Public state machine for verification lifecycle.
+@objc(TTGPuzzleVerifyState)
+public enum TTGPuzzleVerifyState: Int {
+    case idle = 0
+    case dragging
+    case verified
+    case failed
+    case locked
+}
+
+@objc(TTGPuzzleVerifySuccessAnimation)
+public enum TTGPuzzleVerifySuccessAnimation: Int {
+    case none = 0
+    case snap
+    case snapAndFade
+}
+
+@objc(TTGPuzzleVerifyFailureAnimation)
+public enum TTGPuzzleVerifyFailureAnimation: Int {
+    case none = 0
+    case shake
+    case reset
+    case shakeAndReset
+}
+
+/// One sampled movement point used for lightweight behavior analysis.
+@objcMembers
+public final class TTGPuzzleVerifyTrackPoint: NSObject {
+    public let point: CGPoint
+    public let timestamp: TimeInterval
+    public let velocity: CGPoint
+
+    public init(point: CGPoint, timestamp: TimeInterval, velocity: CGPoint) {
+        self.point = point
+        self.timestamp = timestamp
+        self.velocity = velocity
+        super.init()
+    }
+}
+
+/// Verification result snapshot delivered on completion/failure callbacks.
+@objcMembers
+public final class TTGPuzzleVerifyResult: NSObject {
+    public let isVerified: Bool
+    public let puzzlePosition: CGPoint
+    public let blankPosition: CGPoint
+    public let xOffset: CGFloat
+    public let yOffset: CGFloat
+    public let elapsedTime: TimeInterval
+    public let dragDistance: CGFloat
+    public let interactionCount: Int
+
+    public init(isVerified: Bool,
+                puzzlePosition: CGPoint,
+                blankPosition: CGPoint,
+                xOffset: CGFloat,
+                yOffset: CGFloat,
+                elapsedTime: TimeInterval,
+                dragDistance: CGFloat,
+                interactionCount: Int) {
+        self.isVerified = isVerified
+        self.puzzlePosition = puzzlePosition
+        self.blankPosition = blankPosition
+        self.xOffset = xOffset
+        self.yOffset = yOffset
+        self.elapsedTime = elapsedTime
+        self.dragDistance = dragDistance
+        self.interactionCount = interactionCount
+        super.init()
+    }
+}
+
+@objcMembers
+public final class TTGPuzzleVerifyShadowStyle: NSObject, NSCopying {
+    public var color: UIColor
+    public var radius: CGFloat
+    public var opacity: CGFloat
+    public var offset: CGSize
+
+    public override convenience init() {
+        self.init(color: .black, radius: 4, opacity: 0.5, offset: .zero)
+    }
+
+    public init(color: UIColor = .black, radius: CGFloat = 4, opacity: CGFloat = 0.5, offset: CGSize = .zero) {
+        self.color = color
+        self.radius = radius
+        self.opacity = opacity
+        self.offset = offset
+        super.init()
+    }
+
+    public func copy(with zone: NSZone? = nil) -> Any {
+        TTGPuzzleVerifyShadowStyle(color: color, radius: radius, opacity: opacity, offset: offset)
+    }
+}
+
+@objcMembers
+public final class TTGPuzzleVerifyStyle: NSObject, NSCopying {
+    public var blankAlpha: CGFloat
+    public var blankInnerShadow: TTGPuzzleVerifyShadowStyle
+    public var puzzleShadow: TTGPuzzleVerifyShadowStyle
+    public var backgroundColor: UIColor
+    public var cornerRadius: CGFloat
+
+    public override convenience init() {
+        self.init(blankAlpha: 0.5,
+                  blankInnerShadow: TTGPuzzleVerifyShadowStyle(),
+                  puzzleShadow: TTGPuzzleVerifyShadowStyle(),
+                  backgroundColor: .clear,
+                  cornerRadius: 0)
+    }
+
+    public init(blankAlpha: CGFloat = 0.5,
+                blankInnerShadow: TTGPuzzleVerifyShadowStyle = TTGPuzzleVerifyShadowStyle(),
+                puzzleShadow: TTGPuzzleVerifyShadowStyle = TTGPuzzleVerifyShadowStyle(),
+                backgroundColor: UIColor = .clear,
+                cornerRadius: CGFloat = 0) {
+        self.blankAlpha = blankAlpha
+        self.blankInnerShadow = blankInnerShadow
+        self.puzzleShadow = puzzleShadow
+        self.backgroundColor = backgroundColor
+        self.cornerRadius = cornerRadius
+        super.init()
+    }
+
+    public func copy(with zone: NSZone? = nil) -> Any {
+        TTGPuzzleVerifyStyle(blankAlpha: blankAlpha,
+                             blankInnerShadow: blankInnerShadow.copy() as! TTGPuzzleVerifyShadowStyle,
+                             puzzleShadow: puzzleShadow.copy() as! TTGPuzzleVerifyShadowStyle,
+                             backgroundColor: backgroundColor,
+                             cornerRadius: cornerRadius)
+    }
+}
+
+/// Behavior and style bundle for applying consistent setup in one call.
+@objcMembers
+public final class TTGPuzzleVerifyConfiguration: NSObject, NSCopying {
+    public var puzzlePattern: TTGPuzzleVerifyPattern
+    public var puzzleSize: CGSize
+    public var verificationTolerance: CGFloat
+    public var allowedAxes: TTGPuzzleVerifyAllowedAxes
+    public var autoSnapWhenWithinTolerance: Bool
+    public var recordsTrack: Bool
+    public var maxRetryCount: Int
+    public var style: TTGPuzzleVerifyStyle
+
+    public override convenience init() {
+        self.init(puzzlePattern: .classicPattern,
+                  puzzleSize: CGSize(width: 100, height: 100),
+                  verificationTolerance: 8,
+                  allowedAxes: .both,
+                  autoSnapWhenWithinTolerance: true,
+                  recordsTrack: true,
+                  maxRetryCount: 0,
+                  style: TTGPuzzleVerifyStyle())
+    }
+
+    public init(puzzlePattern: TTGPuzzleVerifyPattern = .classicPattern,
+                puzzleSize: CGSize = CGSize(width: 100, height: 100),
+                verificationTolerance: CGFloat = 8,
+                allowedAxes: TTGPuzzleVerifyAllowedAxes = .both,
+                autoSnapWhenWithinTolerance: Bool = true,
+                recordsTrack: Bool = true,
+                maxRetryCount: Int = 0,
+                style: TTGPuzzleVerifyStyle = TTGPuzzleVerifyStyle()) {
+        self.puzzlePattern = puzzlePattern
+        self.puzzleSize = puzzleSize
+        self.verificationTolerance = verificationTolerance
+        self.allowedAxes = allowedAxes
+        self.autoSnapWhenWithinTolerance = autoSnapWhenWithinTolerance
+        self.recordsTrack = recordsTrack
+        self.maxRetryCount = maxRetryCount
+        self.style = style
+        super.init()
+    }
+
+    public func copy(with zone: NSZone? = nil) -> Any {
+        TTGPuzzleVerifyConfiguration(puzzlePattern: puzzlePattern,
+                                     puzzleSize: puzzleSize,
+                                     verificationTolerance: verificationTolerance,
+                                     allowedAxes: allowedAxes,
+                                     autoSnapWhenWithinTolerance: autoSnapWhenWithinTolerance,
+                                     recordsTrack: recordsTrack,
+                                     maxRetryCount: maxRetryCount,
+                                     style: style.copy() as! TTGPuzzleVerifyStyle)
+    }
+}
+
+/// Objective-C compatible delegate for state, position, success, and failure events.
 @objc(TTGPuzzleVerifyViewDelegate)
 public protocol TTGPuzzleVerifyViewDelegate: AnyObject {
     @objc optional func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView, didChangedVerification isVerified: Bool)
@@ -23,8 +221,12 @@ public protocol TTGPuzzleVerifyViewDelegate: AnyObject {
                                          didChangedPuzzlePosition newPosition: CGPoint,
                                          xPercentage: CGFloat,
                                          yPercentage: CGFloat)
+    @objc optional func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView, didChangeState state: TTGPuzzleVerifyState)
+    @objc optional func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView, didCompleteWith result: TTGPuzzleVerifyResult)
+    @objc optional func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView, didFailWith result: TTGPuzzleVerifyResult)
 }
 
+/// Puzzle verification view. The class is Swift-native and exported to Objective-C.
 @objcMembers
 @objc(TTGPuzzleVerifyView)
 public final class TTGPuzzleVerifyView: UIView {
@@ -35,10 +237,11 @@ public final class TTGPuzzleVerifyView: UIView {
         static let verificationTolerance: CGFloat = 8
         static let puzzleBlankAlpha: CGFloat = 0.5
         static let shadowRadius: CGFloat = 4
-        static let shadowOpacity: Float = 0.5
+        static let shadowOpacity: CGFloat = 0.5
         static let shadowInset: CGFloat = -20
     }
 
+    /// Source image displayed by background and puzzle piece layers.
     public var image: UIImage? {
         didSet {
             backImageView.image = image
@@ -60,7 +263,7 @@ public final class TTGPuzzleVerifyView: UIView {
         get { rawPuzzleSize }
         set {
             rawPuzzleSize = sanitizedPuzzleSize(newValue)
-            setPuzzlePosition(puzzlePosition, notify: false)
+            setPuzzlePosition(puzzlePosition, notify: false, source: .programmatic)
             updatePuzzleMask()
         }
     }
@@ -69,7 +272,7 @@ public final class TTGPuzzleVerifyView: UIView {
         get { rawPuzzleBlankPosition }
         set {
             rawPuzzleBlankPosition = clampedPuzzlePosition(newValue)
-            setPuzzlePosition(puzzlePosition, notify: false)
+            setPuzzlePosition(puzzlePosition, notify: false, source: .programmatic)
             updatePuzzleMask()
         }
     }
@@ -79,7 +282,7 @@ public final class TTGPuzzleVerifyView: UIView {
             CGPoint(x: puzzleContainerPosition.x + rawPuzzleBlankPosition.x,
                     y: puzzleContainerPosition.y + rawPuzzleBlankPosition.y)
         }
-        set { setPuzzlePosition(newValue, notify: false) }
+        set { setPuzzlePosition(newValue, notify: false, source: .programmatic) }
     }
 
     public var puzzleXPercentage: CGFloat {
@@ -89,11 +292,11 @@ public final class TTGPuzzleVerifyView: UIView {
             return (puzzlePosition.x - puzzleMinX) / range
         }
         set {
-            guard enable else { return }
+            guard canMove else { return }
             let percentage = clampedPercentage(newValue)
             var position = puzzlePosition
             position.x = percentage * (puzzleMaxX - puzzleMinX) + puzzleMinX
-            setPuzzlePosition(position, notify: true)
+            setPuzzlePosition(position, notify: true, source: .programmatic)
         }
     }
 
@@ -104,15 +307,17 @@ public final class TTGPuzzleVerifyView: UIView {
             return (puzzlePosition.y - puzzleMinY) / range
         }
         set {
-            guard enable else { return }
+            guard canMove else { return }
             let percentage = clampedPercentage(newValue)
             var position = puzzlePosition
             position.y = percentage * (puzzleMaxY - puzzleMinY) + puzzleMinY
-            setPuzzlePosition(position, notify: true)
+            setPuzzlePosition(position, notify: true, source: .programmatic)
         }
     }
 
-    public var verificationTolerance: CGFloat = Defaults.verificationTolerance
+    public var verificationTolerance: CGFloat = Defaults.verificationTolerance {
+        didSet { verificationTolerance = max(0, verificationTolerance) }
+    }
 
     public var isVerified: Bool {
         abs(puzzlePosition.x - rawPuzzleBlankPosition.x) <= verificationTolerance &&
@@ -120,8 +325,31 @@ public final class TTGPuzzleVerifyView: UIView {
     }
 
     public var enable: Bool = true {
-        didSet { isUserInteractionEnabled = enable }
+        didSet { isUserInteractionEnabled = enable && state != .locked }
     }
+
+    public private(set) var state: TTGPuzzleVerifyState = .idle {
+        didSet {
+            guard oldValue != state else { return }
+            delegate?.puzzleVerifyView?(self, didChangeState: state)
+            stateChangeBlock?(self, state)
+        }
+    }
+
+    /// Controls whether user panning moves horizontally, vertically, or freely.
+    public var allowedAxes: TTGPuzzleVerifyAllowedAxes = .both
+    /// Automatically snaps the puzzle to the blank when the position enters the tolerance range.
+    public var autoSnapWhenWithinTolerance = true
+    public var successAnimation: TTGPuzzleVerifySuccessAnimation = .snapAndFade
+    public var failureAnimation: TTGPuzzleVerifyFailureAnimation = .shake
+    public var resetOnFailure = false
+    public var recordsTrack = true
+    public var maxRetryCount: Int = 0 {
+        didSet { maxRetryCount = max(0, maxRetryCount) }
+    }
+    public private(set) var retryCount: Int = 0
+    /// Recorded movement samples. Clear with `clearTrack()` when reusing the same challenge.
+    public private(set) var trackPoints: [TTGPuzzleVerifyTrackPoint] = []
 
     public var puzzleBlankAlpha: CGFloat = Defaults.puzzleBlankAlpha {
         didSet {
@@ -141,7 +369,7 @@ public final class TTGPuzzleVerifyView: UIView {
         }
     }
 
-    public var puzzleBlankInnerShadowOpacity: CGFloat = CGFloat(Defaults.shadowOpacity) {
+    public var puzzleBlankInnerShadowOpacity: CGFloat = Defaults.shadowOpacity {
         didSet {
             puzzleBlankInnerShadowOpacity = clampedAlpha(puzzleBlankInnerShadowOpacity)
             applyInnerShadowStyle()
@@ -163,7 +391,7 @@ public final class TTGPuzzleVerifyView: UIView {
         }
     }
 
-    public var puzzleShadowOpacity: CGFloat = CGFloat(Defaults.shadowOpacity) {
+    public var puzzleShadowOpacity: CGFloat = Defaults.shadowOpacity {
         didSet {
             puzzleShadowOpacity = clampedAlpha(puzzleShadowOpacity)
             applyPuzzleShadowStyle()
@@ -176,6 +404,16 @@ public final class TTGPuzzleVerifyView: UIView {
 
     public weak var delegate: TTGPuzzleVerifyViewDelegate?
     public var verificationChangeBlock: ((TTGPuzzleVerifyView, Bool) -> Void)?
+    public var positionChangeBlock: ((TTGPuzzleVerifyView, CGPoint, CGFloat, CGFloat) -> Void)?
+    public var stateChangeBlock: ((TTGPuzzleVerifyView, TTGPuzzleVerifyState) -> Void)?
+    public var completionBlock: ((TTGPuzzleVerifyView, TTGPuzzleVerifyResult) -> Void)?
+    public var failureBlock: ((TTGPuzzleVerifyView, TTGPuzzleVerifyResult) -> Void)?
+
+    private enum MoveSource {
+        case programmatic
+        case user
+        case internalAnimation
+    }
 
     private let backImageView = UIImageView()
     private let backMaskLayer = CAShapeLayer()
@@ -190,6 +428,12 @@ public final class TTGPuzzleVerifyView: UIView {
     private var rawPuzzleBlankPosition = CGPoint.zero
     private var puzzleContainerPosition = Defaults.puzzlePosition
     private var lastVerification = false
+    private var interactionStartTime: TimeInterval?
+    private var lastTrackPoint: TTGPuzzleVerifyTrackPoint?
+
+    private var canMove: Bool {
+        enable && state != .locked
+    }
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -253,40 +497,79 @@ public final class TTGPuzzleVerifyView: UIView {
 
     @objc(completeVerificationWithAnimation:)
     public func completeVerification(withAnimation: Bool) {
-        let updates = {
-            self.setPuzzlePosition(self.rawPuzzleBlankPosition, notify: false)
-            self.puzzleImageContainerView.layer.shadowOpacity = 0
-        }
-
-        if withAnimation {
-            UIView.animate(withDuration: Defaults.animationDuration, animations: updates) { _ in
-                self.performCallback()
-            }
-        } else {
-            updates()
-            performCallback()
-        }
+        finishVerification(withAnimation: withAnimation, forceCallback: true)
     }
 
     public func resetVerification() {
-        setPuzzlePosition(Defaults.puzzlePosition, notify: true)
+        resetInteractionMetrics()
+        retryCount = 0
+        state = .idle
+        setPuzzlePosition(Defaults.puzzlePosition, notify: true, source: .internalAnimation)
+    }
+
+    /// Applies a complete behavior/style configuration.
+    public func applyConfiguration(_ configuration: TTGPuzzleVerifyConfiguration) {
+        puzzlePattern = configuration.puzzlePattern
+        puzzleSize = configuration.puzzleSize
+        verificationTolerance = configuration.verificationTolerance
+        allowedAxes = configuration.allowedAxes
+        autoSnapWhenWithinTolerance = configuration.autoSnapWhenWithinTolerance
+        recordsTrack = configuration.recordsTrack
+        maxRetryCount = configuration.maxRetryCount
+        applyStyle(configuration.style)
+    }
+
+    public func applyStyle(_ style: TTGPuzzleVerifyStyle) {
+        puzzleBlankAlpha = style.blankAlpha
+        puzzleBlankInnerShadowColor = style.blankInnerShadow.color
+        puzzleBlankInnerShadowRadius = style.blankInnerShadow.radius
+        puzzleBlankInnerShadowOpacity = style.blankInnerShadow.opacity
+        puzzleBlankInnerShadowOffset = style.blankInnerShadow.offset
+        puzzleShadowColor = style.puzzleShadow.color
+        puzzleShadowRadius = style.puzzleShadow.radius
+        puzzleShadowOpacity = style.puzzleShadow.opacity
+        puzzleShadowOffset = style.puzzleShadow.offset
+        backgroundColor = style.backgroundColor
+        layer.cornerRadius = max(0, style.cornerRadius)
+        layer.masksToBounds = style.cornerRadius > 0
+    }
+
+    public func clearTrack() {
+        trackPoints.removeAll()
+        lastTrackPoint = nil
+        interactionStartTime = nil
+    }
+
+    /// Builds a result snapshot for the current puzzle position and interaction metrics.
+    public func currentResult() -> TTGPuzzleVerifyResult {
+        makeResult(isVerified: isVerified)
+    }
+
+    public func markVerificationFailed() {
+        handleFailure(shouldAnimate: true)
+    }
+
+    public func unlock() {
+        retryCount = 0
+        state = .idle
+        isUserInteractionEnabled = enable
     }
 
     @objc private func onPanGesture(_ panGestureRecognizer: UIPanGestureRecognizer) {
-        guard enable else { return }
+        guard canMove else { return }
 
-        let panLocation = panGestureRecognizer.location(in: self)
-        let position = CGPoint(x: panLocation.x - rawPuzzleSize.width / 2,
-                               y: panLocation.y - rawPuzzleSize.height / 2)
-
-        if panGestureRecognizer.state == .began {
-            UIView.animate(withDuration: Defaults.animationDuration) {
-                self.setPuzzlePosition(position, notify: false)
-            } completion: { _ in
-                self.performCallback()
-            }
-        } else {
-            setPuzzlePosition(position, notify: true)
+        switch panGestureRecognizer.state {
+        case .began:
+            beginInteractionIfNeeded()
+            state = .dragging
+            movePuzzle(to: position(for: panGestureRecognizer), animated: true, source: .user)
+        case .changed:
+            setPuzzlePosition(position(for: panGestureRecognizer), notify: true, source: .user)
+        case .ended, .cancelled, .failed:
+            setPuzzlePosition(position(for: panGestureRecognizer), notify: true, source: .user)
+            completeOrFailAfterUserInteraction()
+        default:
+            break
         }
     }
 
@@ -307,6 +590,38 @@ public final class TTGPuzzleVerifyView: UIView {
         super.willMove(toSuperview: newSuperview)
         if newSuperview != nil {
             updatePuzzleMask()
+        }
+    }
+
+    private func position(for panGestureRecognizer: UIPanGestureRecognizer) -> CGPoint {
+        let panLocation = panGestureRecognizer.location(in: self)
+        let requestedPosition = CGPoint(x: panLocation.x - rawPuzzleSize.width / 2,
+                                        y: panLocation.y - rawPuzzleSize.height / 2)
+        return constrainedPositionForAllowedAxes(requestedPosition)
+    }
+
+    private func constrainedPositionForAllowedAxes(_ position: CGPoint) -> CGPoint {
+        var constrained = position
+        switch allowedAxes {
+        case .horizontal:
+            constrained.y = puzzlePosition.y
+        case .vertical:
+            constrained.x = puzzlePosition.x
+        case .both:
+            break
+        }
+        return constrained
+    }
+
+    private func movePuzzle(to position: CGPoint, animated: Bool, source: MoveSource) {
+        if animated {
+            UIView.animate(withDuration: Defaults.animationDuration) {
+                self.setPuzzlePosition(position, notify: false, source: source)
+            } completion: { _ in
+                self.performCallback()
+            }
+        } else {
+            setPuzzlePosition(position, notify: true, source: source)
         }
     }
 
@@ -346,11 +661,16 @@ public final class TTGPuzzleVerifyView: UIView {
                                     didChangedPuzzlePosition: position,
                                     xPercentage: xPercentage,
                                     yPercentage: yPercentage)
+        positionChangeBlock?(self, position, xPercentage, yPercentage)
 
         guard lastVerification != verified else { return }
         lastVerification = verified
         delegate?.puzzleVerifyView?(self, didChangedVerification: verified)
         verificationChangeBlock?(self, verified)
+
+        if verified, autoSnapWhenWithinTolerance, state != .verified {
+            finishVerification(withAnimation: true, forceCallback: false)
+        }
     }
 
     private func newScaledPuzzlePath() -> UIBezierPath {
@@ -374,8 +694,8 @@ public final class TTGPuzzleVerifyView: UIView {
         return sourcePath
     }
 
-    private func setPuzzlePosition(_ newPosition: CGPoint, notify: Bool) {
-        guard enable else { return }
+    private func setPuzzlePosition(_ newPosition: CGPoint, notify: Bool, source: MoveSource) {
+        guard canMove || source == .internalAnimation else { return }
 
         let position = clampedPuzzlePosition(newPosition)
         puzzleImageContainerView.layer.shadowOpacity = Float(puzzleShadowOpacity)
@@ -385,8 +705,146 @@ public final class TTGPuzzleVerifyView: UIView {
         frame.origin = puzzleContainerPosition
         puzzleImageContainerView.frame = frame
 
+        if source == .user || (source == .programmatic && recordsTrack) {
+            appendTrackPoint(position)
+        }
+
         if notify {
             performCallback()
+        }
+    }
+
+    private func beginInteractionIfNeeded() {
+        if interactionStartTime == nil {
+            interactionStartTime = CACurrentMediaTime()
+        }
+    }
+
+    private func resetInteractionMetrics() {
+        clearTrack()
+        lastVerification = isVerified
+    }
+
+    private func appendTrackPoint(_ position: CGPoint) {
+        guard recordsTrack else { return }
+        beginInteractionIfNeeded()
+        let timestamp = CACurrentMediaTime()
+        let velocity: CGPoint
+        if let lastTrackPoint {
+            let delta = max(timestamp - lastTrackPoint.timestamp, .ulpOfOne)
+            velocity = CGPoint(x: (position.x - lastTrackPoint.point.x) / delta,
+                               y: (position.y - lastTrackPoint.point.y) / delta)
+        } else {
+            velocity = .zero
+        }
+        let point = TTGPuzzleVerifyTrackPoint(point: position, timestamp: timestamp, velocity: velocity)
+        trackPoints.append(point)
+        lastTrackPoint = point
+    }
+
+    private func completeOrFailAfterUserInteraction() {
+        if isVerified {
+            finishVerification(withAnimation: autoSnapWhenWithinTolerance, forceCallback: false)
+        } else {
+            handleFailure(shouldAnimate: true)
+        }
+    }
+
+    private func finishVerification(withAnimation: Bool, forceCallback: Bool) {
+        let updates = {
+            self.setPuzzlePosition(self.rawPuzzleBlankPosition, notify: false, source: .internalAnimation)
+            if self.successAnimation == .snapAndFade {
+                self.puzzleImageContainerView.layer.shadowOpacity = 0
+            }
+        }
+        let completion = {
+            self.state = .verified
+            let result = self.makeResult(isVerified: true)
+            self.delegate?.puzzleVerifyView?(self, didCompleteWith: result)
+            self.completionBlock?(self, result)
+            if forceCallback || self.lastVerification != true {
+                self.performCallback()
+            }
+        }
+
+        guard successAnimation != .none else {
+            updates()
+            completion()
+            return
+        }
+
+        if withAnimation {
+            UIView.animate(withDuration: Defaults.animationDuration, animations: updates) { _ in completion() }
+        } else {
+            updates()
+            completion()
+        }
+    }
+
+    private func handleFailure(shouldAnimate: Bool) {
+        retryCount += 1
+        state = maxRetryCount > 0 && retryCount >= maxRetryCount ? .locked : .failed
+        isUserInteractionEnabled = enable && state != .locked
+
+        let result = makeResult(isVerified: false)
+        delegate?.puzzleVerifyView?(self, didFailWith: result)
+        failureBlock?(self, result)
+
+        guard shouldAnimate else { return }
+        showFailureFeedback()
+    }
+
+    private func showFailureFeedback() {
+        switch failureAnimation {
+        case .none:
+            if resetOnFailure { setPuzzlePosition(Defaults.puzzlePosition, notify: true, source: .internalAnimation) }
+        case .shake:
+            applyShakeAnimation()
+            if resetOnFailure { setPuzzlePosition(Defaults.puzzlePosition, notify: true, source: .internalAnimation) }
+        case .reset:
+            UIView.animate(withDuration: Defaults.animationDuration) {
+                self.setPuzzlePosition(Defaults.puzzlePosition, notify: false, source: .internalAnimation)
+            } completion: { _ in self.performCallback() }
+        case .shakeAndReset:
+            applyShakeAnimation()
+            UIView.animate(withDuration: Defaults.animationDuration, delay: 0.12, options: [.beginFromCurrentState]) {
+                self.setPuzzlePosition(Defaults.puzzlePosition, notify: false, source: .internalAnimation)
+            } completion: { _ in self.performCallback() }
+        }
+    }
+
+    private func applyShakeAnimation() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.values = [-10, 8, -6, 4, 0]
+        animation.duration = 0.28
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        puzzleImageContainerView.layer.add(animation, forKey: "TTGPuzzleVerifyFailureShake")
+    }
+
+    private func makeResult(isVerified: Bool) -> TTGPuzzleVerifyResult {
+        let position = puzzlePosition
+        let blankPosition = rawPuzzleBlankPosition
+        return TTGPuzzleVerifyResult(isVerified: isVerified,
+                                     puzzlePosition: position,
+                                     blankPosition: blankPosition,
+                                     xOffset: position.x - blankPosition.x,
+                                     yOffset: position.y - blankPosition.y,
+                                     elapsedTime: elapsedTime,
+                                     dragDistance: dragDistance,
+                                     interactionCount: trackPoints.count)
+    }
+
+    private var elapsedTime: TimeInterval {
+        guard let interactionStartTime else { return 0 }
+        return CACurrentMediaTime() - interactionStartTime
+    }
+
+    private var dragDistance: CGFloat {
+        guard trackPoints.count > 1 else { return 0 }
+        return zip(trackPoints, trackPoints.dropFirst()).reduce(CGFloat(0)) { partialResult, pair in
+            let dx = pair.1.point.x - pair.0.point.x
+            let dy = pair.1.point.y - pair.0.point.y
+            return partialResult + hypot(dx, dy)
         }
     }
 

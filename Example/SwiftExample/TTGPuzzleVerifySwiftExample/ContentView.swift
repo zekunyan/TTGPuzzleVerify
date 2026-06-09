@@ -5,6 +5,7 @@ struct ContentView: View {
     @State private var isVerified = false
     @State private var horizontalProgress = 0.1
     @State private var verticalProgress = 0.2
+    @State private var resultSummary = "No verification yet"
 
     var body: some View {
         NavigationStack {
@@ -13,17 +14,22 @@ struct ContentView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(isVerified ? "Verified" : "Slide the puzzle into the blank")
                             .font(.headline)
-                        Text("SwiftUI wraps TTGPuzzleVerifyView with UIViewRepresentable while preserving the Objective-C delegate and block callback APIs.")
+                        Text("SwiftUI wraps TTGPuzzleVerifyView with configuration, state, result, and track callbacks.")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
 
                     PuzzleVerifyRepresentable(isVerified: $isVerified,
+                                              resultSummary: $resultSummary,
                                               xPercentage: $horizontalProgress,
                                               yPercentage: $verticalProgress)
                         .frame(height: 240)
                         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                         .shadow(radius: 12)
+
+                    Text(resultSummary)
+                        .font(.footnote.monospacedDigit())
+                        .foregroundStyle(.secondary)
 
                     VStack(spacing: 16) {
                         Slider(value: $horizontalProgress, in: 0...1) {
@@ -49,6 +55,7 @@ struct ContentView: View {
 
 struct PuzzleVerifyRepresentable: UIViewRepresentable {
     @Binding var isVerified: Bool
+    @Binding var resultSummary: String
     @Binding var xPercentage: Double
     @Binding var yPercentage: Double
 
@@ -59,17 +66,32 @@ struct PuzzleVerifyRepresentable: UIViewRepresentable {
     func makeUIView(context: Context) -> TTGPuzzleVerifyView {
         let view = TTGPuzzleVerifyView()
         view.image = UIImage.ttg_demoGradientImage(size: CGSize(width: 640, height: 400))
-        view.puzzlePattern = .classicPattern
-        view.puzzleSize = CGSize(width: 86, height: 86)
+        let style = TTGPuzzleVerifyStyle()
+        style.blankAlpha = 0.45
+        style.cornerRadius = 18
+
+        let configuration = TTGPuzzleVerifyConfiguration()
+        configuration.puzzlePattern = .classicPattern
+        configuration.puzzleSize = CGSize(width: 86, height: 86)
+        configuration.verificationTolerance = 6
+        configuration.allowedAxes = .both
+        configuration.autoSnapWhenWithinTolerance = true
+        configuration.recordsTrack = true
+        configuration.style = style
+        view.applyConfiguration(configuration)
         view.puzzleBlankPosition = CGPoint(x: 220, y: 96)
         view.puzzlePosition = CGPoint(x: 24, y: 118)
-        view.verificationTolerance = 6
-        view.puzzleBlankAlpha = 0.45
         view.delegate = context.coordinator
         view.verificationChangeBlock = { _, verified in
             DispatchQueue.main.async {
                 isVerified = verified
             }
+        }
+        view.completionBlock = { _, result in
+            resultSummary = "verified offset=(\(Int(result.xOffset)), \(Int(result.yOffset))) points=\(result.interactionCount)"
+        }
+        view.failureBlock = { _, result in
+            resultSummary = "failed offset=(\(Int(result.xOffset)), \(Int(result.yOffset))) points=\(result.interactionCount)"
         }
         return view
     }
@@ -100,6 +122,14 @@ struct PuzzleVerifyRepresentable: UIViewRepresentable {
                               yPercentage: CGFloat) {
             parent.xPercentage = Double(xPercentage)
             parent.yPercentage = Double(yPercentage)
+        }
+
+        func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView, didCompleteWith result: TTGPuzzleVerifyResult) {
+            parent.resultSummary = "verified in \(String(format: "%.2f", result.elapsedTime))s, distance \(Int(result.dragDistance))"
+        }
+
+        func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView, didFailWith result: TTGPuzzleVerifyResult) {
+            parent.resultSummary = "failed, retry with offset \(Int(result.xOffset)), \(Int(result.yOffset))"
         }
     }
 }

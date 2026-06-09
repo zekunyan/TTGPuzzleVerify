@@ -23,6 +23,8 @@
     _puzzleVerifyView.puzzleBlankPosition = CGPointMake(200, 40);
     _puzzleVerifyView.puzzlePosition = CGPointMake(10, 40);
     _puzzleVerifyView.puzzleXPercentage = 0.1;
+    _puzzleVerifyView.allowedAxes = TTGPuzzleVerifyAllowedAxesHorizontal;
+    _puzzleVerifyView.failureAnimation = TTGPuzzleVerifyFailureAnimationShakeAndReset;
     _puzzleVerifyView.delegate = self;
 }
 

@@ -1,13 +1,16 @@
 # TTGPuzzleVerify Swift Example
 
-This is a Swift 5.9 / iOS 16 example app for `TTGPuzzleVerify`.
+This Swift 5.9 / iOS 16 example demonstrates the modern Swift core API.
 
-It demonstrates:
+It includes:
 
-- using `TTGPuzzleVerifyView` directly from Swift UIKit code;
-- wrapping `TTGPuzzleVerifyView` in SwiftUI with `UIViewRepresentable`;
-- delegate callbacks and `verificationChangeBlock` state binding;
-- programmatic slider-driven puzzle movement and manual completion/reset.
+- SwiftUI integration with `UIViewRepresentable`;
+- Swift UIKit integration;
+- `TTGPuzzleVerifyConfiguration` and `TTGPuzzleVerifyStyle` usage;
+- horizontal/free-axis interaction modes;
+- success/failure callbacks with `TTGPuzzleVerifyResult`;
+- track metrics such as elapsed time, drag distance, and interaction count;
+- completion, reset, and failure feedback demos.
 
 ## Run
 

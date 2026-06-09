@@ -9,178 +9,189 @@
 
 ![Gif](https://github.com/zekunyan/TTGPuzzleVerify/raw/master/Resources/TTGPuzzleVerify.gif)
 
-## What 
-By completing **image puzzle game**, TTGPuzzleVerify is a **more user-friendly** verification tool on iOS, which is highly customizable and easy to use. It supports square, circle, classic or custom puzzle shape. User can complete the verification by sliding horizontally, vertically or directly dragging the puzzle block.
+## What
+
+TTGPuzzleVerify is an iOS puzzle verification component. The core is implemented in Swift 5.9, exposed to Objective-C, and supports UIKit, Swift UIKit, and SwiftUI integration.
 
 ## Features
-* More user-friendly
-* Highly Customizable
-* Classic, square, circle or custom puzzle shape
-* Slide horizontally or vertically or drag the puzzle directly
+
+* Swift 5.9 implementation with Objective-C interoperability.
+* iOS 16+ CocoaPods and Swift Package Manager support.
+* Classic, square, circle, and custom puzzle paths.
+* Horizontal-only, vertical-only, or free two-axis dragging.
+* Local verification with configurable tolerance and optional auto-snap.
+* Verification state machine: idle, dragging, verified, failed, locked.
+* Rich verification result object with offsets, elapsed time, drag distance, and interaction count.
+* Drag track collection with timestamp and velocity for behavior analysis.
+* Retry/lock support for repeated failures.
+* Delegate callbacks plus Swift closure callbacks.
+* Centralized configuration and style objects.
+* Success and failure feedback animations.
 
 ## Examples
 
-The repository now includes two runnable example apps:
+The repository includes two runnable example apps:
 
 * Objective-C UIKit example: run `pod install` from the `Example` directory, then open `Example/TTGPuzzleVerify.xcworkspace`.
 * Swift 5.9 example with UIKit and SwiftUI demos: run `pod install` from `Example/SwiftExample`, then open `Example/SwiftExample/TTGPuzzleVerifySwiftExample.xcworkspace`.
 
 ## Requirements
-iOS 16.0 and later. Swift 5.9 is used for SwiftPM/CocoaPods metadata and the Swift example.
+
+* iOS 16.0+
+* Swift 5.9+
+* Xcode 15+
 
 ## Installation
 
-TTGPuzzleVerify is available through [CocoaPods](http://cocoapods.org). To install
-it, set an iOS 16 deployment target and add the following line to your Podfile:
+### CocoaPods
 
 ```ruby
 platform :ios, '16.0'
+use_frameworks!
+
 pod "TTGPuzzleVerify"
 ```
 
-Swift Package Manager is also supported for iOS 16+ projects by adding this repository as a package dependency.
+### Swift Package Manager
 
-## Usage
-`TTGPuzzleVerifyView` (implemented in Swift and exposed to Objective-C)
+Add this repository as an iOS 16+ package dependency. The package product is `TTGPuzzleVerify`.
 
-### Basic use
+## Swift usage
+
+```swift
+import TTGPuzzleVerify
+
+let puzzleView = TTGPuzzleVerifyView(frame: CGRect(x: 20, y: 80, width: 320, height: 220))
+puzzleView.image = UIImage(named: "pic")
+
+let style = TTGPuzzleVerifyStyle()
+style.blankAlpha = 0.45
+style.cornerRadius = 16
+style.puzzleShadow.opacity = 0.4
+
+let configuration = TTGPuzzleVerifyConfiguration()
+configuration.puzzlePattern = .classicPattern
+configuration.puzzleSize = CGSize(width: 86, height: 86)
+configuration.verificationTolerance = 6
+configuration.allowedAxes = .horizontal
+configuration.autoSnapWhenWithinTolerance = true
+configuration.maxRetryCount = 3
+configuration.style = style
+
+puzzleView.applyConfiguration(configuration)
+puzzleView.puzzleBlankPosition = CGPoint(x: 220, y: 96)
+puzzleView.puzzlePosition = CGPoint(x: 24, y: 96)
+
+puzzleView.completionBlock = { view, result in
+    print("verified", result.elapsedTime, result.dragDistance)
+}
+
+puzzleView.failureBlock = { view, result in
+    print("failed offset", result.xOffset, result.yOffset)
+}
 ```
-// Import
+
+## Objective-C usage
+
+Since the core is Swift, Objective-C clients should import the generated Swift header when using CocoaPods frameworks:
+
+```objc
 #import <TTGPuzzleVerify/TTGPuzzleVerify-Swift.h>
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Create TTGPuzzleVerifyView instance
-    _puzzleVerifyView = [[TTGPuzzleVerifyView alloc] initWithFrame:CGRectMake(20, 20, 320, 200)];
-    [self.view addSubview:_puzzleVerifyView];
-    
-    // Set image
-    _puzzleVerifyView.image = [UIImage imageNamed:@"pic"];
-    
-    // Set the puzzle blank position
-    _puzzleVerifyView.puzzleBlankPosition = CGPointMake(200, 40);
-    
-    // Set init puzzle position
-    _puzzleVerifyView.puzzlePosition = CGPointMake(10, 40);
-    
-    // Callback
-    [_puzzleVerifyView setVerificationChangeBlock:^(TTGPuzzleVerifyView *view, BOOL isVerified) {
-        if (isVerified) {
-            // User complete the verification
-        }
-    }];
+TTGPuzzleVerifyView *puzzleView = [[TTGPuzzleVerifyView alloc] initWithFrame:CGRectMake(20, 80, 320, 220)];
+puzzleView.image = [UIImage imageNamed:@"pic"];
+puzzleView.puzzlePattern = TTGPuzzleVerifyPatternClassicPattern;
+puzzleView.allowedAxes = TTGPuzzleVerifyAllowedAxesHorizontal;
+puzzleView.puzzleBlankPosition = CGPointMake(220, 96);
+puzzleView.puzzlePosition = CGPointMake(24, 96);
+puzzleView.verificationTolerance = 6;
+puzzleView.delegate = self;
+
+[puzzleView setCompletionBlock:^(TTGPuzzleVerifyView *view, TTGPuzzleVerifyResult *result) {
+    NSLog(@"verified in %.2fs", result.elapsedTime);
+}];
+```
+
+## Key APIs
+
+### Pattern
+
+```swift
+public enum TTGPuzzleVerifyPattern: Int {
+    case classicPattern
+    case squarePattern
+    case circlePattern
+    case customPattern
 }
+```
 
-// On slide changed
-- (IBAction)onSliderChange:(UISlider *)sender {
-    // Update position
-    _puzzleVerifyView.puzzleXPercentage = sender.value;
+### Drag axes
+
+```swift
+public enum TTGPuzzleVerifyAllowedAxes: Int {
+    case horizontal
+    case vertical
+    case both
 }
-
 ```
 
-### API
-#### Puzzle pattern types
-```
-/**
- * TTGPuzzleVerifyView pattern type
- */
-typedef NS_ENUM(NSInteger, TTGPuzzleVerifyPattern) {
-    TTGPuzzleVerifyPatternClassicPattern = 0, // Default
-    TTGPuzzleVerifyPatternSquarePattern,
-    TTGPuzzleVerifyPatternCirclePattern,
-    TTGPuzzleVerifyPatternCustomPattern
-};
+### State
 
-// Puzzle pattern, default is TTGPuzzleVerifyPatternClassicPattern
-@property (nonatomic, assign) TTGPuzzleVerifyPattern puzzlePattern;
-
-// Custom path for puzzle shape. Only work when puzzlePattern is TTGPuzzleVerifyPatternCustomPattern
-@property (nonatomic, strong) UIBezierPath *customPuzzlePatternPath;
+```swift
+public enum TTGPuzzleVerifyState: Int {
+    case idle
+    case dragging
+    case verified
+    case failed
+    case locked
+}
 ```
 
-#### Complete or reset the puzzle
-```
-/**
- Complete verification. Call this to move the puzzle to its blank position and fill the blank.
+### Result
 
- @param withAnimation if show animation
- */
-- (void)completeVerificationWithAnimation:(BOOL)withAnimation;
+`TTGPuzzleVerifyResult` includes:
 
-/**
- Reset verification. Call this to move the puzzle back to the default start position.
- */
-- (void)resetVerification;
-```
+* `isVerified`
+* `puzzlePosition`
+* `blankPosition`
+* `xOffset` / `yOffset`
+* `elapsedTime`
+* `dragDistance`
+* `interactionCount`
 
-#### Callback
-```
-/**
- * Verification changed callback delegate
- */
-@protocol TTGPuzzleVerifyViewDelegate <NSObject>
-@optional
-- (void)puzzleVerifyView:(TTGPuzzleVerifyView *)puzzleVerifyView didChangedVerification:(BOOL)isVerified;
+### Configuration
 
-- (void)puzzleVerifyView:(TTGPuzzleVerifyView *)puzzleVerifyView didChangedPuzzlePosition:(CGPoint)newPosition
-             xPercentage:(CGFloat)xPercentage yPercentage:(CGFloat)yPercentage;
-@end
+Use `TTGPuzzleVerifyConfiguration` to apply behavior consistently:
 
-// Callback block and delegate
-@property (nonatomic, weak) id <TTGPuzzleVerifyViewDelegate> delegate; // Callback delegate
-@property (nonatomic, copy) void (^verificationChangeBlock)(TTGPuzzleVerifyView *puzzleVerifyView, BOOL isVerified); // verification changed callback block
-```
+* `puzzlePattern`
+* `puzzleSize`
+* `verificationTolerance`
+* `allowedAxes`
+* `autoSnapWhenWithinTolerance`
+* `recordsTrack`
+* `maxRetryCount`
+* `style`
 
-#### Puzzle image
-```
-@property (nonatomic, strong) UIImage *image; // Image for verification
-```
+### Callbacks
 
-#### Puzzle size and position
-```
-// Puzzle rect size，not for TTGPuzzleVerifyPatternCustomPattern pattern
-@property (nonatomic, assign) CGSize puzzleSize;
+The component supports delegate and closure callbacks:
 
-// Puzzle blank position
-@property (nonatomic, assign) CGPoint puzzleBlankPosition;
+* position changed
+* verification changed
+* state changed
+* completed with result
+* failed with result
 
-// Puzzle current position
-@property (nonatomic, assign) CGPoint puzzlePosition;
+## Testing
 
-// Puzzle current X and Y position percentage, range: [0, 1]
-@property (nonatomic, assign) CGFloat puzzleXPercentage;
-@property (nonatomic, assign) CGFloat puzzleYPercentage;
-```
+Objective-C tests cover default configuration, clamping, percentage mapping, verification tolerance, callbacks, configuration/style application, failure locking, result creation, and track collection.
 
-#### Puzzle verification
-```
-// Verification
-@property (nonatomic, assign) CGFloat verificationTolerance; // Verification tolerance, default is 8
-@property (nonatomic, assign, readonly) BOOL isVerified; // Verification boolean
-```
+Run the tests from macOS with Xcode:
 
-#### Style
-```
-/**
- * Style
- */
-
-// Puzzle blank alpha, default is 0.5
-@property (nonatomic, assign) CGFloat puzzleBlankAlpha;
-
-// Puzzle blank inner shadow
-@property (nonatomic, strong) UIColor *puzzleBlankInnerShadowColor; // Default: black
-@property (nonatomic, assign) CGFloat puzzleBlankInnerShadowRadius; // Default: 4
-@property (nonatomic, assign) CGFloat puzzleBlankInnerShadowOpacity; // Default: 0.5
-@property (nonatomic, assign) CGSize puzzleBlankInnerShadowOffset; // Default: (0, 0)
-
-// Puzzle shadow
-@property (nonatomic, strong) UIColor *puzzleShadowColor; // Default: black
-@property (nonatomic, assign) CGFloat puzzleShadowRadius; // Default: 4
-@property (nonatomic, assign) CGFloat puzzleShadowOpacity; // Default: 0.5
-@property (nonatomic, assign) CGSize puzzleShadowOffset; // Default: (0, 0)
+```sh
+cd Example
+pod install
+xcodebuild -workspace TTGPuzzleVerify.xcworkspace -scheme TTGPuzzleVerify-Example -destination 'platform=iOS Simulator,name=iPhone 15' test
 ```
 
 ## Author

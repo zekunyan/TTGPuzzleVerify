@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
   s.name             = 'TTGPuzzleVerify'
-  s.version          = '1.0.0'
-  s.summary          = 'By completing image puzzle game, TTGPuzzleVerify is a more user-friendly verification tool on iOS, which is highly customizable and easy to use.'
+  s.version          = '2.0.0'
+  s.summary          = 'A native iOS puzzle verification component with image backgrounds, custom shapes, metrics, and SwiftUI/UIKit/Objective-C integration.'
 
   s.description      = <<-DESC
-                        By completing image puzzle game, TTGPuzzleVerify is a more user-friendly verification tool on iOS, which is highly customizable and easy to use. It supports square, circle, classic or custom puzzle shape. User can complete the verification by sliding horizontally, vertically or directly dragging the puzzle block.
+                        TTGPuzzleVerify is a customizable native iOS puzzle verification component. It supports image or gradient backgrounds, classic/square/circle/custom puzzle paths, horizontal/vertical/free dragging, manual or automatic verification, retry and lock states, behavior metrics, and integration from SwiftUI, UIKit, and Objective-C.
                         DESC
 
   s.homepage         = 'https://github.com/zekunyan/TTGPuzzleVerify'

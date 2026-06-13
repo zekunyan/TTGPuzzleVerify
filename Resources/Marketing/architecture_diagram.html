@@ -6,33 +6,42 @@
   <title>TTGPuzzleVerify Architecture</title>
   <style>
     :root {
-      --ink: #111827;
-      --muted: #667085;
-      --line: rgba(20, 119, 255, 0.22);
-      --card: rgba(255, 255, 255, 0.86);
+      --ink: #0f172a;
+      --muted: #5f6f89;
+      --line: rgba(15, 23, 42, 0.1);
       --blue: #1477ff;
-      --purple: #5b5cff;
-      --cyan: #08a7b7;
-      --green: #17b26a;
+      --teal: #10b8a7;
+      --violet: #7c3aed;
       --orange: #f79009;
       --pink: #ef4d7a;
-      --dark: #111827;
+      --green: #17b26a;
+      --paper: rgba(255, 255, 255, 0.9);
     }
 
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif; color: var(--ink); background: #eaf3ff; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #dcecff;
+    }
 
     .canvas {
-      width: min(100vw, 1600px);
-      min-height: 1000px;
-      padding: 54px 68px;
       position: relative;
+      width: min(100vw, 1600px);
+      height: 1000px;
+      padding: 34px 64px 28px;
       overflow: hidden;
       background:
-        radial-gradient(circle at 85% 18%, rgba(20,119,255,0.18), transparent 28%),
-        radial-gradient(circle at 10% 85%, rgba(0,169,157,0.22), transparent 30%),
-        linear-gradient(120deg, #eef7ff, #f8fbff);
-      box-shadow: 0 28px 80px rgba(15, 23, 42, 0.15);
+        radial-gradient(circle at 11% 18%, rgba(20, 119, 255, 0.2), transparent 25%),
+        radial-gradient(circle at 88% 18%, rgba(239, 77, 122, 0.18), transparent 24%),
+        radial-gradient(circle at 72% 88%, rgba(16, 184, 167, 0.22), transparent 29%),
+        linear-gradient(135deg, #f9fcff 0%, #eef7ff 48%, #f8fbff 100%);
+      box-shadow: 0 28px 80px rgba(15, 23, 42, 0.16);
     }
 
     .canvas::before {
@@ -40,124 +49,469 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(20,119,255,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(20,119,255,0.06) 1px, transparent 1px);
-      background-size: 28px 28px;
+        linear-gradient(rgba(20, 119, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 119, 255, 0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
       pointer-events: none;
     }
 
-    header { position: relative; z-index: 2; display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 38px; }
-    .eyebrow { display: inline-flex; padding: 10px 16px; border-radius: 999px; background: white; color: var(--blue); font-weight: 900; box-shadow: 0 10px 24px rgba(20,119,255,0.12); }
-    h1 { margin: 18px 0 0; font-size: 60px; line-height: 0.94; letter-spacing: -0.065em; }
-    .subtitle { max-width: 540px; color: var(--muted); font-size: 20px; line-height: 1.35; font-weight: 700; text-align: right; }
-
-    .diagram { position: relative; z-index: 2; display: grid; grid-template-columns: 280px 1fr 300px; gap: 28px; align-items: stretch; }
-    .lane { display: grid; gap: 18px; }
-    .lane-title { margin: 0 0 2px; font-size: 16px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
-
-    .card {
-      border: 1px solid rgba(17,24,39,0.08);
-      border-radius: 22px;
-      background: var(--card);
-      backdrop-filter: blur(22px);
-      box-shadow: 0 18px 44px rgba(15, 23, 42, 0.09);
-      padding: 20px;
+    .canvas::after {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      right: -160px;
+      top: 210px;
+      border-radius: 50%;
+      background: conic-gradient(from 160deg, rgba(20, 119, 255, 0.18), rgba(16, 184, 167, 0.2), rgba(247, 144, 9, 0.17), rgba(124, 58, 237, 0.18), rgba(20, 119, 255, 0.18));
+      filter: blur(10px);
+      opacity: 0.9;
     }
 
-    .card h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 22px; letter-spacing: -0.035em; }
-    .card p { margin: 0; color: var(--muted); font-weight: 650; line-height: 1.34; font-size: 14px; }
-    .icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 12px; color: white; font-size: 15px; font-weight: 1000; flex: 0 0 auto; }
-    .blue { background: var(--blue); } .purple { background: var(--purple); } .cyan { background: var(--cyan); } .green { background: var(--green); } .orange { background: var(--orange); } .pink { background: var(--pink); }
+    header,
+    .layers {
+      position: relative;
+      z-index: 2;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr 470px;
+      gap: 44px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 48px;
+      line-height: 0.92;
+      letter-spacing: -0.055em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.34;
+      font-weight: 760;
+      text-align: right;
+    }
+
+    .layers {
+      display: grid;
+      gap: 12px;
+    }
+
+    .layer {
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 30px;
+      background: var(--paper);
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      backdrop-filter: blur(20px);
+      padding: 14px 18px;
+    }
+
+    .layer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 10px;
+    }
+
+    .layer-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: -0.035em;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 14px;
+      color: white;
+      font-size: 20px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 760;
+      max-width: 520px;
+      text-align: right;
+    }
+
+    .tiles {
+      display: grid;
+      gap: 14px;
+    }
+
+    .entry-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .module-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .feature-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .flow-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+    .tile {
+      position: relative;
+      min-height: 88px;
+      padding: 13px 15px;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.56);
+      color: white;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    .tile::after {
+      content: "";
+      position: absolute;
+      width: 132px;
+      height: 132px;
+      right: -46px;
+      bottom: -56px;
+      border-radius: 44px;
+      background: rgba(255, 255, 255, 0.16);
+      transform: rotate(20deg);
+    }
+
+    .tile h3 {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 10px;
+      font-size: 20px;
+      letter-spacing: -0.035em;
+    }
+
+    .tile p {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      max-width: 290px;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 12px;
+      line-height: 1.34;
+      font-weight: 760;
+    }
+
+    .emoji {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+      font-size: 18px;
+      flex: 0 0 auto;
+    }
+
+    .swiftui { background: linear-gradient(135deg, #1477ff, #55b7ff); }
+    .uikit { background: linear-gradient(135deg, #10b8a7, #42d7bd); }
+    .objc { background: linear-gradient(135deg, #f79009, #ffbd55); }
+    .render { background: linear-gradient(135deg, #1477ff, #6aa9ff); }
+    .pattern { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+    .motion { background: linear-gradient(135deg, #0f9f9a, #35d3c4); }
+    .state { background: linear-gradient(135deg, #ef4d7a, #ff86aa); }
+    .image { background: linear-gradient(135deg, #0ea5e9, #22d3ee); }
+    .shape { background: linear-gradient(135deg, #8b5cf6, #c084fc); }
+    .behavior { background: linear-gradient(135deg, #f97316, #facc15); }
+    .bridge { background: linear-gradient(135deg, #16a34a, #6ee7b7); }
 
     .core {
-      border-radius: 34px;
-      padding: 28px;
-      background: rgba(255,255,255,0.68);
-      border: 1px solid rgba(20,119,255,0.16);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45), 0 26px 70px rgba(20,119,255,0.12);
-    }
-
-    .core-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
-    .core-title h2 { margin: 0; font-size: 34px; letter-spacing: -0.055em; }
-    .pill { padding: 9px 14px; border-radius: 999px; color: var(--blue); background: #eaf3ff; font-weight: 900; }
-
-    .core-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .module { position: relative; min-height: 150px; padding: 20px; border-radius: 22px; border: 1px solid rgba(17,24,39,0.08); background: white; box-shadow: 0 16px 32px rgba(15,23,42,0.07); }
-    .module h3 { margin: 0 0 10px; font-size: 22px; letter-spacing: -0.04em; }
-    .module ul { margin: 0; padding-left: 18px; color: var(--muted); font-weight: 680; line-height: 1.55; font-size: 14px; }
-    .module::after { content: ""; position: absolute; left: 20px; right: 20px; bottom: 16px; height: 6px; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--cyan)); opacity: 0.58; }
-
-    .flow {
-      grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 16px;
-      margin-top: 28px;
+      grid-template-columns: 1.08fr 1.9fr;
+      gap: 18px;
+      align-items: stretch;
+      padding: 18px 22px;
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(18, 36, 74, 0.94)),
+        #111827;
+      color: white;
+      border: 0;
     }
 
-    .step { position: relative; padding: 18px; border-radius: 20px; background: #111827; color: white; min-height: 116px; box-shadow: 0 18px 42px rgba(17,24,39,0.22); }
-    .step:not(:last-child)::after { content: "→"; position: absolute; right: -21px; top: 44px; color: var(--blue); font-size: 26px; font-weight: 1000; }
-    .step span { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 10px; background: var(--blue); font-size: 13px; font-weight: 1000; }
-    .step h4 { margin: 13px 0 6px; font-size: 17px; letter-spacing: -0.02em; }
-    .step p { margin: 0; color: #cbd5e1; font-size: 12px; line-height: 1.35; font-weight: 700; }
+    .core-hero {
+      min-height: 196px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 8px 8px 8px 0;
+    }
 
-    .footer { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; margin-top: 26px; color: var(--muted); font-weight: 900; }
-    .legend { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .chip { padding: 8px 12px; border-radius: 999px; background: white; box-shadow: 0 8px 18px rgba(15,23,42,0.08); }
+    .core-hero h2 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -0.052em;
+    }
 
-    @media print { body { background: white; } .canvas { box-shadow: none; width: 1600px; } }
+    .core-hero p {
+      margin: 16px 0 0;
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.42;
+      font-weight: 720;
+    }
+
+    .core-mark {
+      display: grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--blue), var(--teal) 58%, var(--orange));
+      font-size: 34px;
+      box-shadow: 0 22px 48px rgba(20, 119, 255, 0.3);
+    }
+
+    .module-card {
+      min-height: 84px;
+      padding: 13px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .module-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 8px;
+      color: white;
+      font-size: 15px;
+      letter-spacing: -0.03em;
+    }
+
+    .module-card p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 720;
+    }
+
+    .connector {
+      display: grid;
+      grid-template-columns: 1fr 44px 1fr;
+      align-items: center;
+      color: rgba(15, 23, 42, 0.28);
+      font-weight: 1000;
+      font-size: 18px;
+      padding: 0 32px;
+      height: 18px;
+    }
+
+    .connector::before,
+    .connector::after {
+      content: "";
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(20, 119, 255, 0.36), transparent);
+    }
+
+    .flow-step {
+      min-height: 82px;
+      padding: 16px;
+      border-radius: 22px;
+      background: white;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    .flow-step h3 {
+      margin: 7px 0 6px;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .flow-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.34;
+      font-weight: 730;
+    }
+
+    .index {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 11px;
+      color: white;
+      font-size: 13px;
+      font-weight: 1000;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--muted);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      font-size: 13px;
+      font-weight: 860;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .bottom-grid .layer {
+      min-height: 190px;
+    }
+
+    .bottom-grid .feature-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bottom-grid .feature-grid .tile {
+      min-height: 64px;
+      padding: 9px 12px;
+      border-radius: 18px;
+    }
+
+    .bottom-grid .feature-grid .tile h3 {
+      margin-bottom: 5px;
+      font-size: 17px;
+    }
+
+    .bottom-grid .feature-grid .tile p {
+      font-size: 10px;
+      line-height: 1.28;
+    }
+
+    .bottom-grid .flow-grid {
+      grid-template-columns: 1fr;
+      gap: 7px;
+    }
+
+    .bottom-grid .flow-step {
+      display: grid;
+      grid-template-columns: 28px 82px 1fr;
+      align-items: center;
+      gap: 10px;
+      min-height: 27px;
+      padding: 6px 9px;
+      border-radius: 14px;
+    }
+
+    .bottom-grid .flow-step h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .bottom-grid .flow-step p {
+      font-size: 10px;
+      line-height: 1.25;
+    }
+
+    @media print {
+      body { background: white; }
+      .canvas { width: 1600px; box-shadow: none; }
+    }
   </style>
 </head>
 <body>
   <main class="canvas" role="img" aria-label="TTGPuzzleVerify architecture diagram">
     <header>
       <div>
-        <div class="eyebrow">Architecture overview</div>
-        <h1>TTGPuzzleVerify<br />Core Architecture</h1>
+        <h1>TTGPuzzleVerify<br />Architecture</h1>
+        <div class="chips">
+          <span class="chip">Native iOS core</span>
+          <span class="chip">UIKit / SwiftUI / Objective-C</span>
+          <span class="chip">Image + gradient puzzle backgrounds</span>
+        </div>
       </div>
-      <p class="subtitle">A modern verification view designed around rendering, interaction, metrics, state, and clean UIKit / SwiftUI / Objective-C integration.</p>
+      <p class="subtitle">A layered puzzle verification component: one shared native view, expressive configuration, predictable interaction state, and lightweight integration surfaces.</p>
     </header>
 
-    <section class="diagram">
-      <aside class="lane">
-        <h2 class="lane-title">Consumers</h2>
-        <article class="card"><h3><span class="icon blue">S</span>SwiftUI Demo</h3><p>Uses UIViewRepresentable bindings for verification state, progress, result summary, and callbacks.</p></article>
-        <article class="card"><h3><span class="icon cyan">U</span>Swift UIKit</h3><p>Direct view integration with configuration, horizontal mode, failure feedback, and result labels.</p></article>
-        <article class="card"><h3><span class="icon orange">O</span>Objective-C UIKit</h3><p>Imports the generated Swift header and uses bridged enums, delegate methods, and blocks.</p></article>
-      </aside>
-
-      <section class="core">
-        <div class="core-title"><h2>TTGPuzzleVerifyView</h2><span class="pill">UIKit UIView · @objc API</span></div>
-        <div class="core-grid">
-          <article class="module"><h3>Rendering Layer</h3><ul><li>Back image mask</li><li>Front hole mask</li><li>Puzzle piece mask</li><li>Inner and piece shadows</li></ul></article>
-          <article class="module"><h3>Pattern Engine</h3><ul><li>Classic puzzle path</li><li>Square / circle paths</li><li>Custom UIBezierPath</li><li>Scaled and translated masks</li></ul></article>
-          <article class="module"><h3>Interaction Engine</h3><ul><li>Pan gesture handling</li><li>Horizontal / vertical / both axes</li><li>Percentage setters</li><li>Clamped bounds</li></ul></article>
-          <article class="module"><h3>Verification State</h3><ul><li>Idle / dragging</li><li>Verified / failed</li><li>Retry and locked states</li><li>Auto-snap success</li></ul></article>
-          <article class="module"><h3>Metrics & Result</h3><ul><li>Track points</li><li>Timestamp and velocity</li><li>Elapsed time</li><li>Offset and drag distance</li></ul></article>
-          <article class="module"><h3>Configuration API</h3><ul><li>Behavior configuration</li><li>Style object</li><li>Delegate callbacks</li><li>Swift closures</li></ul></article>
+    <section class="layers">
+      <section class="layer">
+        <div class="layer-head">
+          <h2 class="layer-title"><span class="badge swiftui">📱</span>Integration Layer</h2>
+          <span class="note">Different app surfaces use the same verification engine and configuration model.</span>
+        </div>
+        <div class="tiles entry-grid">
+          <article class="tile swiftui"><h3><span class="emoji">🧩</span>SwiftUI</h3><p>Wrap the native view with bindings for state, progress, result, and callbacks.</p></article>
+          <article class="tile uikit"><h3><span class="emoji">🎛️</span>UIKit</h3><p>Drop in a UIView, style it, control it with gestures or sliders, and react to verification.</p></article>
+          <article class="tile objc"><h3><span class="emoji">🔗</span>Objective-C</h3><p>Use the generated Swift header with bridged enums, blocks, and delegate callbacks.</p></article>
         </div>
       </section>
 
-      <aside class="lane">
-        <h2 class="lane-title">Distribution</h2>
-        <article class="card"><h3><span class="icon purple">P</span>CocoaPods</h3><p>iOS 16.0 deployment target, Swift package metadata, local path examples.</p></article>
-        <article class="card"><h3><span class="icon green">M</span>Swift Package</h3><p>SPM manifest exposes the Swift source as the TTGPuzzleVerify library product.</p></article>
-        <article class="card"><h3><span class="icon pink">T</span>Tests</h3><p>Objective-C XCTest target validates bridging, configuration, callbacks, results, and track collection.</p></article>
-      </aside>
+      <div class="connector">↓</div>
 
-      <div class="flow">
-        <article class="step"><span>1</span><h4>Configure</h4><p>Apply pattern, size, tolerance, axes, tracking, retry count, and style.</p></article>
-        <article class="step"><span>2</span><h4>Render</h4><p>Build masks for the image, blank hole, puzzle piece, and shadows.</p></article>
-        <article class="step"><span>3</span><h4>Interact</h4><p>Handle pan/slider changes with clamped x/y percentages.</p></article>
-        <article class="step"><span>4</span><h4>Verify</h4><p>Evaluate offsets, tolerance, state, auto-snap, or failure feedback.</p></article>
-        <article class="step"><span>5</span><h4>Report</h4><p>Emit delegate and closure callbacks with result and behavior metrics.</p></article>
+      <section class="layer core">
+        <div class="core-hero">
+          <div class="core-mark">🧠</div>
+          <div>
+            <h2>TTGPuzzleVerifyView</h2>
+            <p>The shared UIKit core owns rendering, puzzle geometry, dragging, verification state, and result reporting.</p>
+          </div>
+        </div>
+        <div class="tiles module-grid">
+          <article class="module-card"><h3><span class="emoji">🎨</span>Render</h3><p>Background, blank cutout, puzzle piece, mask, and shadow composition.</p></article>
+          <article class="module-card"><h3><span class="emoji">✂️</span>Pattern</h3><p>Classic, square, circle, and custom UIBezierPath shape generation.</p></article>
+          <article class="module-card"><h3><span class="emoji">🕹️</span>Interaction</h3><p>Gesture and slider-driven x/y percentage movement with bounds.</p></article>
+          <article class="module-card"><h3><span class="emoji">✅</span>Verify</h3><p>Manual or automatic verification with tolerance, snap, failure, and reset states.</p></article>
+        </div>
+      </section>
+
+      <div class="connector">↓</div>
+
+      <div class="bottom-grid">
+        <section class="layer">
+          <div class="layer-head">
+            <h2 class="layer-title"><span class="badge pattern">✨</span>Feature Modules</h2>
+            <span class="note">Compact config, broad visual and behavior coverage.</span>
+          </div>
+          <div class="tiles feature-grid">
+            <article class="tile image"><h3><span class="emoji">🖼️</span>Backgrounds</h3><p>Gradients, bundled images, or remote images.</p></article>
+            <article class="tile shape"><h3><span class="emoji">🔷</span>Shapes</h3><p>Classic, square, circle, or custom path.</p></article>
+            <article class="tile behavior"><h3><span class="emoji">↻</span>Behavior</h3><p>Axes, reset, retry, manual verify, auto snap.</p></article>
+            <article class="tile bridge"><h3><span class="emoji">📊</span>Metrics</h3><p>Offsets, elapsed time, track points, interactions.</p></article>
+          </div>
+        </section>
+
+        <section class="layer">
+          <div class="layer-head">
+            <h2 class="layer-title"><span class="badge motion">⚡</span>Verification Flow</h2>
+            <span class="note">One simple runtime path for every demo.</span>
+          </div>
+          <div class="tiles flow-grid">
+            <article class="flow-step"><span class="index">1</span><h3>Configure</h3><p>Style, pattern, tolerance, axes, callbacks.</p></article>
+            <article class="flow-step"><span class="index">2</span><h3>Render</h3><p>Build the surface and movable piece.</p></article>
+            <article class="flow-step"><span class="index">3</span><h3>Move</h3><p>Drag or drive through slider percentages.</p></article>
+            <article class="flow-step"><span class="index">4</span><h3>Verify</h3><p>Success snap, failure feedback, reset state.</p></article>
+            <article class="flow-step"><span class="index">5</span><h3>Report</h3><p>Return result, state, and metrics.</p></article>
+          </div>
+        </section>
       </div>
     </section>
 
-    <footer class="footer">
-      <div class="legend"><span class="chip">Native Core</span><span class="chip">iOS 16+</span><span class="chip">SwiftUI</span><span class="chip">UIKit</span><span class="chip">Objective-C</span></div>
-      <span>TTGPuzzleVerify · Puzzle verification component</span>
-    </footer>
   </main>
 </body>
 </html>

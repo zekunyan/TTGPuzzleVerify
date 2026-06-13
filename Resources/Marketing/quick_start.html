@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TTGPuzzleVerify Quick Start Templates</title>
+  <style>
+    :root {
+      --ink: #101828;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, 0.12);
+      --bg: #f6f8fb;
+      --blue: #1570ef;
+      --teal: #0e9384;
+      --orange: #f79009;
+      --code: #111827;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      scrollbar-width: none;
+    }
+
+    body::-webkit-scrollbar { display: none; }
+
+    main {
+      width: min(1180px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 56px 0 72px;
+    }
+
+    header {
+      margin-bottom: 34px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 54px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.42;
+      font-weight: 620;
+    }
+
+    .section {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 28px;
+      align-items: stretch;
+      padding: 26px;
+      margin-top: 24px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: white;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+    }
+
+    .shot {
+      position: relative;
+      width: 100%;
+      min-height: 620px;
+      border: 10px solid #101828;
+      border-radius: 34px;
+      overflow: hidden;
+      background: #101828;
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.2);
+    }
+
+    .shot img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 24px;
+      background: white;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .kicker {
+      width: max-content;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    h2 {
+      margin: 18px 0 10px;
+      font-size: 34px;
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.45;
+      font-weight: 610;
+    }
+
+    pre {
+      margin: 22px 0 0;
+      padding: 18px;
+      border-radius: 14px;
+      background: var(--code);
+      color: #f8fafc;
+      overflow: auto;
+      font-size: 13px;
+      line-height: 1.45;
+      tab-size: 2;
+    }
+
+    code {
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    .notes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 18px;
+    }
+
+    .note {
+      padding: 8px 10px;
+      border-radius: 999px;
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .blue { background: var(--blue); }
+    .teal { background: var(--teal); }
+    .orange { background: var(--orange); }
+
+    @media (max-width: 880px) {
+      .section { grid-template-columns: 1fr; }
+      .shot { max-width: 360px; min-height: 620px; }
+    }
+
+    @media print {
+      body { background: white; }
+      main { width: 1180px; }
+      .section { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Quick Start</h1>
+      <p class="lead">Real example screenshots paired with the smallest integration snippets for SwiftUI, Swift UIKit, Objective-C UIKit, and image-backed puzzles.</p>
+    </header>
+
+    <section class="section" id="swiftui">
+      <div class="shot"><img src="assets/swift-home.jpg" alt="SwiftUI example home screenshot" /></div>
+      <div class="content">
+        <span class="kicker">SwiftUI wrapper</span>
+        <h2>Embed the UIKit view with bindings.</h2>
+        <p>Use <code>UIViewRepresentable</code> to keep puzzle state, slider progress, and verification results in SwiftUI.</p>
+        <pre><code>struct PuzzleVerifyRepresentable: UIViewRepresentable {
+    @Binding var isVerified: Bool
+    @Binding var xPercentage: Double
+    @Binding var yPercentage: Double
+
+    func makeUIView(context: Context) -&gt; TTGPuzzleVerifyView {
+        let view = TTGPuzzleVerifyView()
+        view.image = UIImage(named: "background")
+
+        let configuration = TTGPuzzleVerifyConfiguration()
+        configuration.puzzlePattern = .classicPattern
+        configuration.puzzleSize = CGSize(width: 86, height: 86)
+        configuration.allowedAxes = .both
+        configuration.autoSnapWhenWithinTolerance = true
+
+        view.applyConfiguration(configuration)
+        view.puzzleBlankPosition = CGPoint(x: 220, y: 96)
+        view.verificationChangeBlock = { _, verified in
+            isVerified = verified
+        }
+        return view
+    }
+}</code></pre>
+        <div class="notes"><span class="note blue">SwiftUI</span><span class="note teal">Bindings</span><span class="note orange">Callbacks</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="swift-uikit">
+      <div class="shot"><img src="assets/swift-uikit.jpg" alt="Swift UIKit example screenshot" /></div>
+      <div class="content">
+        <span class="kicker">Swift UIKit</span>
+        <h2>Configure a native view directly.</h2>
+        <p>The UIKit demo uses a horizontal puzzle and a slider backed by <code>puzzleXPercentage</code>.</p>
+        <pre><code>let puzzleView = TTGPuzzleVerifyView()
+puzzleView.image = UIImage(named: "background")
+
+let configuration = TTGPuzzleVerifyConfiguration()
+configuration.puzzlePattern = .circlePattern
+configuration.puzzleSize = CGSize(width: 92, height: 92)
+configuration.allowedAxes = .horizontal
+configuration.verificationTolerance = 7
+
+puzzleView.applyConfiguration(configuration)
+puzzleView.puzzleBlankPosition = CGPoint(x: 210, y: 20)
+puzzleView.resetVerification()</code></pre>
+        <div class="notes"><span class="note blue">UIKit</span><span class="note teal">Slider</span><span class="note orange">Auto verify</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="objective-c">
+      <div class="shot"><img src="assets/objc-home.jpg" alt="Objective-C example home screenshot" /></div>
+      <div class="content">
+        <span class="kicker">Objective-C UIKit</span>
+        <h2>Use the Swift core from Objective-C.</h2>
+        <p>Objective-C clients import the generated Swift header and configure the same native component.</p>
+        <pre><code>#import &lt;TTGPuzzleVerify/TTGPuzzleVerify-Swift.h&gt;
+
+TTGPuzzleVerifyView *puzzleView = [[TTGPuzzleVerifyView alloc] init];
+puzzleView.image = TTGDemoGradientImage(CGSizeMake(640, 400), TTGDemoImageVariantOcean);
+
+TTGPuzzleVerifyConfiguration *configuration = [[TTGPuzzleVerifyConfiguration alloc] init];
+configuration.puzzlePattern = TTGPuzzleVerifyPatternClassicPattern;
+configuration.allowedAxes = TTGPuzzleVerifyAllowedAxesBoth;
+configuration.autoSnapWhenWithinTolerance = YES;
+
+[puzzleView applyConfiguration:configuration];
+puzzleView.puzzleBlankPosition = CGPointMake(220, 96);
+[puzzleView resetVerification];</code></pre>
+        <div class="notes"><span class="note blue">Objective-C</span><span class="note teal">UIKit</span><span class="note orange">Bridge header</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="image-background">
+      <div class="shot"><img src="assets/swift-image-background.jpg" alt="Image background demo screenshot" /></div>
+      <div class="content">
+        <span class="kicker">Image background</span>
+        <h2>Use a photo when the challenge needs real texture.</h2>
+        <p>Most demos keep generated gradients for clarity; one dedicated demo shows how to swap in a bundled image.</p>
+        <pre><code>let configuration = TTGPuzzleVerifyConfiguration()
+configuration.puzzlePattern = .classicPattern
+configuration.allowedAxes = .horizontal
+configuration.autoSnapWhenWithinTolerance = true
+
+puzzleView.image = UIImage(named: "pic3")
+puzzleView.applyConfiguration(configuration)
+puzzleView.puzzleBlankPosition = CGPoint(x: 200, y: 20)
+puzzleView.resetVerification()</code></pre>
+        <div class="notes"><span class="note blue">UIImage</span><span class="note teal">Bundled assets</span><span class="note orange">Dedicated demo</span></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

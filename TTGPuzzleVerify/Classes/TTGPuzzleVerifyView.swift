@@ -744,7 +744,12 @@ public final class TTGPuzzleVerifyView: UIView {
 
     private func completeOrFailAfterUserInteraction() {
         if isVerified {
-            finishVerification(withAnimation: autoSnapWhenWithinTolerance, forceCallback: false)
+            guard autoSnapWhenWithinTolerance else {
+                state = .idle
+                performCallback()
+                return
+            }
+            finishVerification(withAnimation: true, forceCallback: false)
         } else {
             handleFailure(shouldAnimate: true)
         }

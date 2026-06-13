@@ -5,6 +5,7 @@ final class SwiftPuzzleDemoViewController: UIViewController, TTGPuzzleVerifyView
     private let puzzleView = TTGPuzzleVerifyView()
     private let statusLabel = UILabel()
     private let horizontalSlider = UISlider()
+    private var didApplyInitialReset = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -12,6 +13,13 @@ final class SwiftPuzzleDemoViewController: UIViewController, TTGPuzzleVerifyView
         title = "Swift UIKit"
         configurePuzzleView()
         configureControls()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard !didApplyInitialReset, !puzzleView.bounds.isEmpty else { return }
+        didApplyInitialReset = true
+        resetPuzzleToStart()
     }
 
     private func configurePuzzleView() {
@@ -24,8 +32,6 @@ final class SwiftPuzzleDemoViewController: UIViewController, TTGPuzzleVerifyView
         configuration.allowedAxes = .horizontal
         puzzleView.applyConfiguration(configuration)
         puzzleView.failureAnimation = .shakeAndReset
-        puzzleView.puzzleBlankPosition = CGPoint(x: 210, y: 86)
-        puzzleView.puzzlePosition = CGPoint(x: 24, y: 86)
         puzzleView.delegate = self
         puzzleView.layer.cornerRadius = 18
         puzzleView.layer.masksToBounds = true
@@ -82,8 +88,14 @@ final class SwiftPuzzleDemoViewController: UIViewController, TTGPuzzleVerifyView
     }
 
     @objc private func resetTapped() {
-        puzzleView.resetVerification()
+        resetPuzzleToStart()
         statusLabel.text = "Not verified · horizontal mode"
+    }
+
+    private func resetPuzzleToStart() {
+        puzzleView.puzzleBlankPosition = CGPoint(x: 210, y: 20)
+        puzzleView.resetVerification()
+        horizontalSlider.value = Float(puzzleView.puzzleXPercentage)
     }
 
     func puzzleVerifyView(_ puzzleVerifyView: TTGPuzzleVerifyView, didChangedVerification isVerified: Bool) {

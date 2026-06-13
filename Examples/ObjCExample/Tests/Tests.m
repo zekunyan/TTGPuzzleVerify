@@ -105,6 +105,40 @@
     XCTAssertEqualWithAccuracy(self.delegatePosition.y, view.puzzleBlankPosition.y, 0.001);
 }
 
+- (void)testProgrammaticMovementAutoCompletesWhenEnabled {
+    TTGPuzzleVerifyView *view = [self makePuzzleView];
+    view.delegate = self;
+    view.successAnimation = TTGPuzzleVerifySuccessAnimationNone;
+
+    view.puzzleYPercentage = view.puzzleBlankPosition.y / (view.bounds.size.height - view.puzzleSize.height);
+    view.puzzleXPercentage = view.puzzleBlankPosition.x / (view.bounds.size.width - view.puzzleSize.width);
+
+    XCTAssertTrue(view.isVerified);
+    XCTAssertEqual(view.state, TTGPuzzleVerifyStateVerified);
+    XCTAssertNotNil(self.completionResult);
+    XCTAssertTrue(self.completionResult.isVerified);
+}
+
+- (void)testProgrammaticMovementRequiresManualCompletionWhenAutoSnapDisabled {
+    TTGPuzzleVerifyView *view = [self makePuzzleView];
+    view.delegate = self;
+    view.autoSnapWhenWithinTolerance = NO;
+
+    view.puzzleYPercentage = view.puzzleBlankPosition.y / (view.bounds.size.height - view.puzzleSize.height);
+    view.puzzleXPercentage = view.puzzleBlankPosition.x / (view.bounds.size.width - view.puzzleSize.width);
+
+    XCTAssertTrue(view.isVerified);
+    XCTAssertTrue(self.delegateVerificationValue);
+    XCTAssertEqual(view.state, TTGPuzzleVerifyStateIdle);
+    XCTAssertNil(self.completionResult);
+
+    [view completeVerificationWithAnimation:NO];
+
+    XCTAssertEqual(view.state, TTGPuzzleVerifyStateVerified);
+    XCTAssertNotNil(self.completionResult);
+    XCTAssertTrue(self.completionResult.isVerified);
+}
+
 - (void)testDisabledViewDoesNotMovePuzzle {
     TTGPuzzleVerifyView *view = [self makePuzzleView];
     CGPoint initialPosition = view.puzzlePosition;

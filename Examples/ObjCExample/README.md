@@ -15,7 +15,7 @@ open TTGPuzzleVerify.xcworkspace
 ```sh
 cd Examples/ObjCExample
 pod install
-xcodebuild -workspace TTGPuzzleVerify.xcworkspace -scheme TTGPuzzleVerify-Example -destination 'platform=iOS Simulator,name=iPhone 15' test
+xcodebuild -workspace TTGPuzzleVerify.xcworkspace -scheme TTGPuzzleVerify-Example -destination 'platform=iOS Simulator,name=iPhone 17' test
 ```
 
 ## Contents

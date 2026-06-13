@@ -6,19 +6,16 @@
   <title>TTGPuzzleVerify Promo Poster</title>
   <style>
     :root {
-      --ink: #111827;
+      --ink: #101828;
       --muted: #667085;
-      --subtle: #eef4ff;
-      --blue: #1477ff;
-      --blue-2: #5b5cff;
-      --cyan: #07a7b7;
-      --teal: #00a99d;
-      --green: #17b26a;
+      --line: rgba(16, 24, 40, 0.12);
+      --paper: #f7f9fc;
+      --blue: #1570ef;
+      --teal: #0e9384;
+      --green: #16a34a;
       --orange: #f79009;
-      --pink: #ef4d7a;
-      --card: rgba(255, 255, 255, 0.82);
-      --stroke: rgba(17, 24, 39, 0.08);
-      --shadow: 0 28px 80px rgba(15, 23, 42, 0.16);
+      --pink: #d92d20;
+      --shadow: 0 30px 90px rgba(15, 23, 42, 0.18);
     }
 
     * { box-sizing: border-box; }
@@ -30,19 +27,18 @@
       place-items: center;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
       color: var(--ink);
-      background: #eaf3ff;
+      background: #dfeaf7;
     }
 
     .poster {
-      position: relative;
       width: min(100vw, 1600px);
       aspect-ratio: 16 / 9;
       overflow: hidden;
-      padding: 64px 80px;
+      position: relative;
+      padding: 56px 68px;
       background:
-        radial-gradient(circle at 80% 76%, rgba(22, 179, 175, 0.28), transparent 28%),
-        radial-gradient(circle at 10% 10%, rgba(20, 119, 255, 0.15), transparent 26%),
-        linear-gradient(120deg, rgba(238, 246, 255, 0.96), rgba(247, 250, 255, 0.96));
+        linear-gradient(135deg, rgba(255,255,255,0.94), rgba(244,248,255,0.9)),
+        linear-gradient(90deg, rgba(21,112,239,0.12), rgba(14,147,132,0.12));
       box-shadow: var(--shadow);
     }
 
@@ -51,247 +47,296 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(20, 119, 255, 0.055) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(20, 119, 255, 0.055) 1px, transparent 1px);
-      background-size: 28px 28px;
-      mask-image: linear-gradient(90deg, rgba(0,0,0,0.78), rgba(0,0,0,0.25));
+        linear-gradient(rgba(21,112,239,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(21,112,239,0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
       pointer-events: none;
     }
 
-    .content { position: relative; z-index: 2; height: 100%; display: grid; grid-template-columns: 560px 1fr; gap: 60px; }
+    .layout {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 520px 1fr;
+      gap: 54px;
+      align-items: stretch;
+    }
+
+    .copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+    }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 12px 18px;
-      margin-bottom: 54px;
+      width: max-content;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      background: white;
+      background: rgba(255,255,255,0.8);
       color: var(--blue);
+      font-size: 15px;
       font-weight: 800;
-      font-size: 18px;
-      box-shadow: 0 10px 30px rgba(20, 119, 255, 0.13);
     }
 
     h1 {
-      margin: 0;
-      letter-spacing: -0.075em;
-      line-height: 0.91;
-      font-size: 76px;
-      max-width: 540px;
+      margin: 34px 0 0;
+      max-width: 500px;
+      font-size: 78px;
+      line-height: 0.92;
+      letter-spacing: 0;
     }
 
     .lead {
-      margin: 34px 0 44px;
-      max-width: 520px;
+      margin: 28px 0 0;
+      max-width: 500px;
       color: var(--muted);
-      font-size: 25px;
-      line-height: 1.28;
-      font-weight: 700;
+      font-size: 23px;
+      line-height: 1.3;
+      font-weight: 650;
     }
 
-    .feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-
-    .feature-card {
-      min-height: 130px;
-      padding: 22px 22px 18px;
-      border: 1px solid var(--stroke);
-      border-radius: 18px;
-      background: var(--card);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 36px;
     }
 
-    .feature-card h3 { margin: 0 0 10px; font-size: 21px; letter-spacing: -0.025em; }
-    .feature-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.24; font-weight: 650; }
+    .feature {
+      position: relative;
+      min-height: 114px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.62)),
+        var(--accent-bg, rgba(255,255,255,0.72));
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.07);
+    }
 
-    .badges { position: absolute; left: 80px; bottom: 36px; display: flex; align-items: center; gap: 14px; font-weight: 900; }
-    .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--blue); }
-    .badge-muted { color: var(--muted); }
+    .feature.image { --accent-bg: rgba(21, 112, 239, 0.14); }
+    .feature.shape { --accent-bg: rgba(124, 58, 237, 0.13); }
+    .feature.flow { --accent-bg: rgba(247, 144, 9, 0.14); }
+    .feature.result { --accent-bg: rgba(14, 147, 132, 0.14); }
 
-    .showcase { position: relative; }
+    .feature strong {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .feature .emoji {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 9px;
+      background: white;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+      font-size: 16px;
+    }
+
+    .feature span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .footer b { color: var(--ink); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+
+    .showcase {
+      position: relative;
+      min-width: 0;
+    }
 
     .phone {
       position: absolute;
-      left: 22px;
-      top: 0;
-      width: 360px;
-      height: 720px;
-      border: 18px solid #111827;
-      border-radius: 50px;
-      background: #f8fbff;
-      box-shadow: 0 32px 70px rgba(17, 24, 39, 0.24);
-      overflow: hidden;
+      width: 255px;
+      height: 552px;
+      border-radius: 36px;
+      padding: 10px;
+      background: #101828;
+      box-shadow: 0 30px 62px rgba(15, 23, 42, 0.26);
     }
 
     .phone::before {
       content: "";
       position: absolute;
-      top: 0;
       left: 50%;
-      width: 120px;
-      height: 28px;
+      top: 10px;
+      width: 82px;
+      height: 22px;
       transform: translateX(-50%);
-      border-radius: 0 0 18px 18px;
-      background: #111827;
-      z-index: 5;
+      border-radius: 0 0 14px 14px;
+      background: #101828;
+      z-index: 2;
     }
 
-    .phone-screen { padding: 54px 24px 24px; height: 100%; }
-    .status { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; font-size: 13px; font-weight: 900; }
-    .phone-title { margin: 0; font-size: 29px; letter-spacing: -0.055em; line-height: 0.95; }
-    .phone-subtitle { margin: 6px 0 22px; color: var(--muted); font-weight: 700; font-size: 13px; }
+    .phone img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 28px;
+      background: white;
+    }
 
-    .puzzle-panel {
-      position: relative;
-      height: 300px;
-      border-radius: 24px;
-      overflow: hidden;
+    .phone.primary {
+      left: 116px;
+      top: 8px;
+      width: 308px;
+      height: 668px;
+      z-index: 4;
+    }
+
+    .phone.secondary {
+      left: 0;
+      top: 92px;
+      transform: rotate(-5deg);
+      z-index: 3;
+    }
+
+    .phone.tertiary {
+      right: 2px;
+      top: 70px;
+      transform: rotate(4deg);
+      z-index: 2;
+    }
+
+    .blue { background: var(--blue); }
+    .teal { background: var(--teal); }
+    .green { background: var(--green); }
+    .orange { background: var(--orange); }
+    .pink { background: var(--pink); }
+
+    .metrics {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 18px;
+      width: auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      z-index: 6;
+    }
+
+    .metric {
+      min-height: 142px;
+      padding: 18px 18px 16px;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 18px;
       background:
-        linear-gradient(135deg, rgba(20, 119, 255, 0.92), rgba(0, 169, 157, 0.8)),
-        url("../TTGPuzzleVerify.jpeg") center / cover;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4), 0 18px 40px rgba(20,119,255,0.24);
+        linear-gradient(160deg, rgba(21,112,239,0.28), rgba(16,24,40,0) 56%),
+        #101828;
+      color: white;
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.22);
     }
 
-    .puzzle-panel::before {
-      content: "";
-      position: absolute;
-      left: 196px;
-      top: 86px;
-      width: 80px;
-      height: 80px;
-      border-radius: 20px;
-      background: rgba(10, 20, 40, 0.36);
-      box-shadow: inset 0 0 26px rgba(0,0,0,0.34);
-      clip-path: path("M14 57 C20 49 32 52 32 62 L32 80 L52 80 C48 71 55 64 64 64 C74 64 82 71 78 80 L96 80 L96 58 C86 62 80 55 80 46 C80 36 86 30 96 34 L96 16 L76 16 C80 7 73 0 64 0 C55 0 48 7 52 16 L32 16 L32 36 C24 31 14 37 14 47 C14 52 17 55 14 57Z");
+    .metric.shape {
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255,255,255,0.16), transparent 30%),
+        linear-gradient(145deg, #155eef, #101828 72%);
     }
 
-    .piece {
-      position: absolute;
-      left: 34px;
-      top: 86px;
-      width: 80px;
-      height: 80px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.84);
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.30);
-      clip-path: path("M14 57 C20 49 32 52 32 62 L32 80 L52 80 C48 71 55 64 64 64 C74 64 82 71 78 80 L96 80 L96 58 C86 62 80 55 80 46 C80 36 86 30 96 34 L96 16 L76 16 C80 7 73 0 64 0 C55 0 48 7 52 16 L32 16 L32 36 C24 31 14 37 14 47 C14 52 17 55 14 57Z");
+    .metric.movement {
+      background:
+        radial-gradient(circle at 78% 18%, rgba(255,255,255,0.15), transparent 28%),
+        linear-gradient(145deg, #0e9384, #101828 72%);
     }
 
-    .slider {
-      position: absolute;
-      left: 26px;
-      right: 26px;
-      bottom: 28px;
-      height: 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.38);
+    .metric.core {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15), transparent 28%),
+        linear-gradient(145deg, #f79009, #101828 72%);
     }
 
-    .slider::before { content: ""; position: absolute; left: 0; width: 46%; height: 100%; border-radius: inherit; background: white; }
-    .slider::after { content: ""; position: absolute; left: 42%; top: 50%; width: 38px; height: 38px; border-radius: 50%; transform: translateY(-50%); background: white; box-shadow: 0 10px 20px rgba(0,0,0,0.22); }
-
-    .tag-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-    .tag { padding: 9px 13px; color: white; font-size: 13px; font-weight: 900; border-radius: 999px; box-shadow: 0 8px 18px rgba(15,23,42,0.12); }
-    .tag.blue { background: var(--blue); } .tag.purple { background: var(--blue-2); } .tag.teal { background: var(--teal); } .tag.orange { background: var(--orange); } .tag.pink { background: var(--pink); }
-
-    .float-card {
-      position: absolute;
-      border: 1px solid var(--stroke);
-      border-radius: 24px;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(24px);
-      box-shadow: 0 28px 62px rgba(15, 23, 42, 0.14);
-      padding: 24px;
+    .metric b {
+      display: block;
+      font-size: 44px;
+      line-height: 1;
+      letter-spacing: 0;
     }
 
-    .float-card h2 { margin: 8px 0 20px; font-size: 31px; line-height: 0.96; letter-spacing: -0.055em; }
-    .float-card .label { color: var(--blue); font-size: 15px; font-weight: 900; }
-    .pill { display: inline-flex; padding: 9px 14px; border-radius: 999px; background: #eff6ff; color: var(--blue); font-weight: 900; font-size: 14px; }
+    .metric span {
+      display: block;
+      margin-top: 12px;
+      color: white;
+      font-size: 15px;
+      line-height: 1.18;
+      font-weight: 850;
+    }
 
-    .security { top: 40px; right: 0; width: 620px; }
-    .swift { top: 330px; right: 16px; width: 570px; }
-    .metrics { left: 260px; bottom: 28px; width: 630px; padding: 22px 24px; border-radius: 20px; color: white; background: #111827; box-shadow: 0 24px 54px rgba(17,24,39,0.34); }
+    .metric em {
+      display: block;
+      margin-top: 8px;
+      color: #d0d5dd;
+      font-size: 12px;
+      line-height: 1.22;
+      font-style: normal;
+      font-weight: 700;
+    }
 
-    .columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .mini-card { padding: 16px; border: 1px solid var(--stroke); border-radius: 16px; background: #f8fbff; min-height: 104px; }
-    .mini-card strong { display: block; font-size: 16px; margin: 10px 0 4px; letter-spacing: -0.02em; }
-    .mini-card span { display: block; color: var(--muted); font-size: 12px; line-height: 1.2; font-weight: 650; }
-    .icon { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; color: white; font-weight: 1000; }
-    .icon.blue { background: var(--blue); } .icon.green { background: var(--green); } .icon.pink { background: var(--pink); }
-
-    .metric-title { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 16px; font-size: 18px; font-weight: 900; letter-spacing: -0.02em; }
-    .meter-grid { display: grid; grid-template-columns: 1.1fr 1fr 0.95fr; gap: 18px; }
-    .meter span { display: block; color: #cbd5e1; font-size: 12px; font-weight: 800; margin-bottom: 8px; }
-    .bar { height: 10px; border-radius: 999px; background: rgba(255,255,255,0.16); overflow: hidden; }
-    .fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
-
-    @media print { body { background: white; } .poster { box-shadow: none; width: 1600px; } }
+    @media print {
+      body { background: white; }
+      .poster { width: 1600px; box-shadow: none; }
+    }
   </style>
 </head>
 <body>
   <main class="poster" role="img" aria-label="TTGPuzzleVerify promotional poster">
-    <section class="content">
-      <div>
-        <div class="eyebrow">Modern puzzle verification for iOS</div>
-        <h1>TTGPuzzle<br />Verify</h1>
-        <p class="lead">A modern, customizable puzzle verification component with a native core, Objective-C compatibility, SwiftUI demos, and behavior metrics.</p>
+    <section class="layout">
+      <div class="copy">
+        <div>
+          <div class="eyebrow">Native iOS puzzle verification</div>
+          <h1>TTGPuzzle<br />Verify</h1>
+          <p class="lead">A customizable puzzle CAPTCHA-style component with image backgrounds, flexible puzzle paths, behavior metrics, and UIKit / SwiftUI / Objective-C integration.</p>
 
-        <div class="feature-grid">
-          <article class="feature-card"><h3>Native Core API</h3><p>Typed enums, result objects, configuration, style, and SPM-ready structure.</p></article>
-          <article class="feature-card"><h3>Security Signals</h3><p>Track points, velocity, elapsed time, drag distance, and retry locking.</p></article>
-          <article class="feature-card"><h3>Flexible Puzzle UX</h3><p>Classic, square, circle, or custom shapes with horizontal, vertical, or free drag.</p></article>
-          <article class="feature-card"><h3>Dual Examples</h3><p>Separate Objective-C UIKit and Swift UIKit + SwiftUI projects.</p></article>
+          <div class="feature-grid">
+            <div class="feature image"><strong><span class="emoji">🖼️</span>Image or Gradient</strong><span>Use bundled photos, remote images, or generated gradients as puzzle backgrounds.</span></div>
+            <div class="feature shape"><strong><span class="emoji">✦</span>Custom Shapes</strong><span>Classic, square, circle, or any custom UIBezierPath puzzle cutout.</span></div>
+            <div class="feature flow"><strong><span class="emoji">↻</span>Verification Flow</strong><span>Auto snap, manual verify, reset, failure feedback, retry count, and lock states.</span></div>
+            <div class="feature result"><strong><span class="emoji">⌁</span>Behavior Result</strong><span>Offsets, elapsed time, drag distance, interaction count, and track samples.</span></div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <b>iOS 16+</b><span class="dot"></span><span>Swift Package Manager</span><span class="dot"></span><span>CocoaPods</span><span class="dot"></span><span>Objective-C compatible</span>
         </div>
       </div>
 
       <div class="showcase">
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="status"><span>9:41</span><span>● ● ●</span></div>
-            <h2 class="phone-title">Puzzle Verify</h2>
-            <p class="phone-subtitle">Drag the piece, verify behavior, and snap into place.</p>
-            <div class="puzzle-panel"><div class="piece"></div><div class="slider"></div></div>
-            <div class="tag-cloud">
-              <span class="tag blue">Swift</span><span class="tag purple">SPM</span><span class="tag teal">SwiftUI</span><span class="tag orange">UIKit</span><span class="tag pink">ObjC</span>
-              <span class="tag teal">Track</span><span class="tag blue">State</span><span class="tag purple">Config</span>
-            </div>
-          </div>
-        </div>
+        <figure class="phone primary"><img src="assets/swift-image-background.jpg" alt="Image background puzzle screen" /></figure>
+        <figure class="phone secondary"><img src="assets/swift-home.jpg" alt="Swift integration screen" /></figure>
+        <figure class="phone tertiary"><img src="assets/objc-home.jpg" alt="Objective-C integration screen" /></figure>
 
-        <article class="float-card security">
-          <div style="display:flex;justify-content:space-between;align-items:start;gap:20px"><span class="label">Verification intelligence</span><span class="pill">Behavior-aware</span></div>
-          <h2>More than a Boolean result.</h2>
-          <div class="columns">
-            <div class="mini-card"><div class="icon blue">Δ</div><strong>Offsets</strong><span>x/y tolerance and final puzzle distance.</span></div>
-            <div class="mini-card"><div class="icon green">T</div><strong>Track Points</strong><span>Timestamp and velocity samples.</span></div>
-            <div class="mini-card"><div class="icon pink">L</div><strong>Retry Lock</strong><span>Failure, lock, reset, and unlock flow.</span></div>
-          </div>
-        </article>
-
-        <article class="float-card swift">
-          <div style="display:flex;justify-content:space-between;align-items:start;gap:20px"><span class="label">Integration ready</span><span class="pill">iOS 16+</span></div>
-          <h2>Swift API, Objective-C bridge, separate demos.</h2>
-          <div class="columns">
-            <div class="mini-card"><div class="icon blue">S</div><strong>SwiftUI</strong><span>UIViewRepresentable sample with bindings.</span></div>
-            <div class="mini-card"><div class="icon green">U</div><strong>UIKit</strong><span>Swift and Objective-C app examples.</span></div>
-            <div class="mini-card"><div class="icon pink">C</div><strong>Config</strong><span>Centralized behavior and styling.</span></div>
-          </div>
-        </article>
-
-        <article class="metrics">
-          <div class="metric-title"><span>Modern verification toolkit</span><span>Swift Package · CocoaPods · Objective-C Compatible</span></div>
-          <div class="meter-grid">
-            <div class="meter"><span>Customizable UX</span><div class="bar"><div class="fill" style="width:92%"></div></div></div>
-            <div class="meter"><span>Behavior Metrics</span><div class="bar"><div class="fill" style="width:86%"></div></div></div>
-            <div class="meter"><span>Demo Coverage</span><div class="bar"><div class="fill" style="width:88%"></div></div></div>
-          </div>
-        </article>
+        <aside class="metrics">
+          <div class="metric shape"><b>4+</b><span>Shape Modes</span><em>Classic, square, circle, and custom UIBezierPath cutouts.</em></div>
+          <div class="metric movement"><b>3</b><span>Movement Modes</span><em>Horizontal, vertical, or free two-axis dragging.</em></div>
+          <div class="metric core"><b>1</b><span>Shared Core</span><em>One native verification engine for SwiftUI, UIKit, and Objective-C.</em></div>
+        </aside>
       </div>
     </section>
-
-    <div class="badges"><span>Native Core</span><span class="dot"></span><span class="badge-muted">iOS 16+</span><span class="dot"></span><span class="badge-muted">Puzzle Verification</span></div>
   </main>
 </body>
 </html>

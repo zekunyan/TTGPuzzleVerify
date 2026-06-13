@@ -5,49 +5,26 @@
 [![License](https://img.shields.io/cocoapods/l/TTGPuzzleVerify.svg?style=flat)](http://cocoapods.org/pods/TTGPuzzleVerify)
 [![Platform](https://img.shields.io/cocoapods/p/TTGPuzzleVerify.svg?style=flat)](http://cocoapods.org/pods/TTGPuzzleVerify)
 
-![Screenshot](https://github.com/zekunyan/TTGPuzzleVerify/raw/master/Resources/TTGPuzzleVerify.jpeg)
+![TTGPuzzleVerify promotional poster](Resources/Marketing/promo_poster.jpg)
 
-![Gif](https://github.com/zekunyan/TTGPuzzleVerify/raw/master/Resources/TTGPuzzleVerify.gif)
+TTGPuzzleVerify is a native iOS puzzle verification component. It supports image or gradient puzzle backgrounds, built-in and custom puzzle paths, configurable verification behavior, behavior metrics, and UIKit / SwiftUI / Objective-C integration from one shared core.
 
-## What
+## Highlights
 
-TTGPuzzleVerify is an iOS puzzle verification component. The core is implemented as a native iOS view, exposed to Objective-C, and supports UIKit, Swift UIKit, and SwiftUI integration.
+* Native UIKit core with SwiftUI and Objective-C interoperability.
+* Image, remote image, or generated gradient puzzle backgrounds.
+* Classic, square, circle, and custom `UIBezierPath` puzzle shapes.
+* Horizontal, vertical, or free two-axis dragging.
+* Manual verification or automatic verification with configurable tolerance.
+* Success snap, failure feedback, reset, retry, and lock states.
+* Rich result payload with offsets, elapsed time, drag distance, interaction count, and optional track samples.
+* CocoaPods and Swift Package Manager support for iOS 16+.
 
-## Features
+## Architecture
 
-* Native iOS implementation with Objective-C interoperability.
-* iOS 16+ CocoaPods and Swift Package Manager support.
-* Classic, square, circle, and custom puzzle paths.
-* Horizontal-only, vertical-only, or free two-axis dragging.
-* Local verification with configurable tolerance and optional auto-snap.
-* Verification state machine: idle, dragging, verified, failed, locked.
-* Rich verification result object with offsets, elapsed time, drag distance, and interaction count.
-* Drag track collection with timestamp and velocity for behavior analysis.
-* Retry/lock support for repeated failures.
-* Delegate callbacks plus Swift closure callbacks.
-* Centralized configuration and style objects.
-* Success and failure feedback animations.
+![TTGPuzzleVerify architecture diagram](Resources/Marketing/architecture_diagram.jpg)
 
-## Marketing assets
-
-Editable HTML marketing assets are available under `Resources/Marketing`:
-
-* `promo_poster.html` for a 16:9 promotional poster.
-* `architecture_diagram.html` for the component architecture and verification flow.
-
-Open the HTML files in a browser and export to PNG/PDF when needed.
-
-## Examples
-
-The repository includes two runnable example apps:
-
-* Objective-C UIKit example: run `pod install` from the `Examples/ObjCExample` directory, then open `Examples/ObjCExample/TTGPuzzleVerify.xcworkspace`.
-* Swift example with UIKit and SwiftUI demos: run `pod install` from `Examples/SwiftExample`, then open `Examples/SwiftExample/TTGPuzzleVerifySwiftExample.xcworkspace`.
-
-## Requirements
-
-* iOS 16.0+
-* Xcode 15+
+The component is organized as one shared `TTGPuzzleVerifyView` core. Integration surfaces configure the same rendering, pattern, interaction, verification, and metrics modules, so SwiftUI, UIKit, and Objective-C demos stay behaviorally consistent.
 
 ## Installation
 
@@ -64,61 +41,96 @@ pod "TTGPuzzleVerify"
 
 Add this repository as an iOS 16+ package dependency. The package product is `TTGPuzzleVerify`.
 
-## Swift usage
+## Quick Start
+
+![TTGPuzzleVerify quick start](Resources/Marketing/quick_start.jpg)
+
+The editable quick start source lives in `Resources/Marketing/quick_start.html`, built from real screenshots under `Resources/Marketing/assets`.
+
+### SwiftUI wrapper
 
 ```swift
 import TTGPuzzleVerify
 
-let puzzleView = TTGPuzzleVerifyView(frame: CGRect(x: 20, y: 80, width: 320, height: 220))
-puzzleView.image = UIImage(named: "pic")
+struct PuzzleVerifyRepresentable: UIViewRepresentable {
+    @Binding var isVerified: Bool
 
-let style = TTGPuzzleVerifyStyle()
-style.blankAlpha = 0.45
-style.cornerRadius = 16
-style.puzzleShadow.opacity = 0.4
+    func makeUIView(context: Context) -> TTGPuzzleVerifyView {
+        let view = TTGPuzzleVerifyView()
+        view.image = UIImage(named: "background")
 
-let configuration = TTGPuzzleVerifyConfiguration()
-configuration.puzzlePattern = .classicPattern
-configuration.puzzleSize = CGSize(width: 86, height: 86)
-configuration.verificationTolerance = 6
-configuration.allowedAxes = .horizontal
-configuration.autoSnapWhenWithinTolerance = true
-configuration.maxRetryCount = 3
-configuration.style = style
+        let configuration = TTGPuzzleVerifyConfiguration()
+        configuration.puzzlePattern = .classicPattern
+        configuration.puzzleSize = CGSize(width: 86, height: 86)
+        configuration.allowedAxes = .both
+        configuration.autoSnapWhenWithinTolerance = true
 
-puzzleView.applyConfiguration(configuration)
-puzzleView.puzzleBlankPosition = CGPoint(x: 220, y: 96)
-puzzleView.puzzlePosition = CGPoint(x: 24, y: 96)
-
-puzzleView.completionBlock = { view, result in
-    print("verified", result.elapsedTime, result.dragDistance)
-}
-
-puzzleView.failureBlock = { view, result in
-    print("failed offset", result.xOffset, result.yOffset)
+        view.applyConfiguration(configuration)
+        view.puzzleBlankPosition = CGPoint(x: 220, y: 96)
+        view.verificationChangeBlock = { _, verified in
+            isVerified = verified
+        }
+        return view
+    }
 }
 ```
 
-## Objective-C usage
+### UIKit configuration
 
-Since the core is Swift, Objective-C clients should import the generated Swift header when using CocoaPods frameworks:
+```swift
+import TTGPuzzleVerify
+
+let puzzleView = TTGPuzzleVerifyView()
+puzzleView.image = UIImage(named: "background")
+
+let configuration = TTGPuzzleVerifyConfiguration()
+configuration.puzzlePattern = .circlePattern
+configuration.puzzleSize = CGSize(width: 92, height: 92)
+configuration.allowedAxes = .horizontal
+configuration.verificationTolerance = 7
+
+puzzleView.applyConfiguration(configuration)
+puzzleView.puzzleBlankPosition = CGPoint(x: 210, y: 20)
+puzzleView.resetVerification()
+```
+
+### Objective-C UIKit
 
 ```objc
 #import <TTGPuzzleVerify/TTGPuzzleVerify-Swift.h>
 
-TTGPuzzleVerifyView *puzzleView = [[TTGPuzzleVerifyView alloc] initWithFrame:CGRectMake(20, 80, 320, 220)];
-puzzleView.image = [UIImage imageNamed:@"pic"];
-puzzleView.puzzlePattern = TTGPuzzleVerifyPatternClassicPattern;
-puzzleView.allowedAxes = TTGPuzzleVerifyAllowedAxesHorizontal;
-puzzleView.puzzleBlankPosition = CGPointMake(220, 96);
-puzzleView.puzzlePosition = CGPointMake(24, 96);
-puzzleView.verificationTolerance = 6;
-puzzleView.delegate = self;
+TTGPuzzleVerifyView *puzzleView = [[TTGPuzzleVerifyView alloc] init];
 
-[puzzleView setCompletionBlock:^(TTGPuzzleVerifyView *view, TTGPuzzleVerifyResult *result) {
-    NSLog(@"verified in %.2fs", result.elapsedTime);
-}];
+TTGPuzzleVerifyConfiguration *configuration = [[TTGPuzzleVerifyConfiguration alloc] init];
+configuration.puzzlePattern = TTGPuzzleVerifyPatternClassicPattern;
+configuration.allowedAxes = TTGPuzzleVerifyAllowedAxesBoth;
+configuration.autoSnapWhenWithinTolerance = YES;
+
+[puzzleView applyConfiguration:configuration];
+puzzleView.puzzleBlankPosition = CGPointMake(220, 96);
+[puzzleView resetVerification];
 ```
+
+### Image background puzzle
+
+```swift
+let configuration = TTGPuzzleVerifyConfiguration()
+configuration.puzzlePattern = .classicPattern
+configuration.allowedAxes = .horizontal
+configuration.autoSnapWhenWithinTolerance = true
+
+puzzleView.image = UIImage(named: "pic3")
+puzzleView.applyConfiguration(configuration)
+puzzleView.puzzleBlankPosition = CGPoint(x: 200, y: 20)
+puzzleView.resetVerification()
+```
+
+## Examples
+
+The repository includes two runnable example apps:
+
+* Objective-C UIKit example: run `pod install` from `Examples/ObjCExample`, then open `Examples/ObjCExample/TTGPuzzleVerify.xcworkspace`.
+* Swift example with UIKit and SwiftUI demos: run `pod install` from `Examples/SwiftExample`, then open `Examples/SwiftExample/TTGPuzzleVerifySwiftExample.xcworkspace`.
 
 ## Key APIs
 
@@ -180,27 +192,28 @@ Use `TTGPuzzleVerifyConfiguration` to apply behavior consistently:
 * `maxRetryCount`
 * `style`
 
-### Callbacks
+## Requirements
 
-The component supports delegate and closure callbacks:
-
-* position changed
-* verification changed
-* state changed
-* completed with result
-* failed with result
+* iOS 16.0+
+* Xcode 15+
 
 ## Testing
 
 Objective-C tests cover default configuration, clamping, percentage mapping, verification tolerance, callbacks, configuration/style application, failure locking, result creation, and track collection.
 
-Run the tests from macOS with Xcode:
-
 ```sh
 cd Examples/ObjCExample
 pod install
-xcodebuild -workspace TTGPuzzleVerify.xcworkspace -scheme TTGPuzzleVerify-Example -destination 'platform=iOS Simulator,name=iPhone 15' test
+xcodebuild -workspace TTGPuzzleVerify.xcworkspace -scheme TTGPuzzleVerify-Example -destination 'platform=iOS Simulator,name=iPhone 17' test
 ```
+
+## Marketing Assets
+
+The editable HTML sources live in `Resources/Marketing`:
+
+* `promo_poster.html` -> `promo_poster.jpg`
+* `architecture_diagram.html` -> `architecture_diagram.jpg`
+* `quick_start.html` -> `quick_start.jpg`
 
 ## Author
 
